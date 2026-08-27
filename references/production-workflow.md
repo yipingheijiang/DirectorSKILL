@@ -47,7 +47,7 @@ RIGHT  kf v02 rejected at gate 3 on axis 7. kf v03 regenerated with "key from ca
 
 ## Shot difficulty rubric
 
-Score each dimension 0–3 before you generate anything. Sum is 0–18.
+Score each dimension 0–3 before you generate anything. Sum is 0–18. Quote a score in the table's own order — Action / People / Camera / Duration / Interaction / Continuity — so that `2/2/0/1/2/3 = 10, Amber` means the same thing in a shot plan, in a review note, and here.
 
 | Dimension | 0 | 1 | 2 | 3 |
 |---|---|---|---|---|

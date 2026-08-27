@@ -188,9 +188,11 @@ chipped lower-left corner, a stairwell window at the head of the stairs opposite
 bare filament bulb hanging over the stairhead, warm and hard, 5:1 lit side to shadow side; a thin
 warm line spills from
 the 4cm gap under the door. Low saturation, high contrast in the lower third; the envelope is the
-only pure white. One character only: a thin 19-year-old male courier, shaved neck, wool cap pushed
-back, grey padded cotton jacket buttoned to the throat, canvas satchel on the left shoulder. Same
-face and wardrobe in every shot. No rendered text or numerals, no rubber soles, no wristwatch, the
+only pure white. One character only: a 19-year-old Chinese man with a narrow jaw, deep-set eyes
+under a low brow, a 2 cm scar through the left eyebrow, black hair clipped short and shaved high at
+the neck, in a grey padded cotton jacket buttoned to the throat with one bone button missing at the
+collar; wool cap pushed back, canvas satchel on the left shoulder. Same face and wardrobe in every
+shot. No rendered text or numerals, no rubber soles, no wristwatch, the
 door never opens.
 [00:00-00:04] Shot 1: wide, high 15 degrees, 35mm. He climbs into frame, crosses the landing in
 three steps and stops squared to the door 60cm out, envelope up at chest. Camera locked. Sound:

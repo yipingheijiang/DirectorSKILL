@@ -6,9 +6,87 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-08-27
+
+An audit release. A full adversarial audit of the package found the content layer sound and the
+delivery layer not: the entry point's frontmatter was not valid YAML, `SKILL.md` contradicted the
+files it named as owners in four places, an entire current capability class was missing, and the
+behaviour contract had never been executed. Everything below is the repair.
+
+### Fixed
+
+- **`SKILL.md` frontmatter was not parseable YAML.** An unquoted scalar containing `": "` made
+  `yaml.safe_load` fail, so any strict parser dropped the skill or read an empty description. It is
+  now a folded (`>-`) block. The `description` was also 1327 characters against the 1024-character
+  spec cap — a regression introduced in 2.0.0 — and is now 1022. CI checks both from now on.
+- **Four contradictions between `SKILL.md` and its own owner files.** The intake block emitted
+  `must_avoid: modern objects`, the exact category hard rule 9 calls unresolvable; the S4 skeleton
+  emitted an `[emotion]` slot against hard rule 5; the self-check stated the two-size-step cut rule
+  unconditionally where four other files state it conditionally; and Mode J chaining contradicted
+  the response-size ceiling thirteen lines below it.
+- **The lighting invariant was specified in two opposite coordinate systems.** The director's book
+  template required world space; `lighting-and-color.md` shipped a camera-space template slot and a
+  camera-space worked example that, pasted into a reverse, flips the key. One system now, world
+  space, with the camera-relative wording derived per shot-plan row.
+- **The shot-size ladder had two definitions.** `prompt-lexicon.md` carried an eight-step table that
+  the two-size-step rule cannot be counted on. `cinematic-language.md` now declares ownership of the
+  six rungs and everything else cites it.
+- **F2 had no QC gate row.** The package's own flagship symptom — the slideshow — was the one code
+  of nineteen that Gate 2 could not score, so a static clip was miscoded F4/F5 and repaired down the
+  wrong branch.
+- **The flagship identity string violated the recipe it demonstrates.** `ID_COURIER` carried zero
+  face-structure facts and no hair spec, so an agent imitating it produced strings with no face
+  geometry — the definition of F1. Rewritten to the recipe, synchronised byte-identically across all
+  six copies, and `continuity-bible.md` is now loaded at the step where the string is written.
+- **An absolute dBFS figure that was about 20 dB hot** in `sound-and-dialogue.md`, in a file whose
+  own convention is dB relative to dialogue.
+- **Two craft errors**: the occlusion geometry on the orbit arc in `blocking-and-staging.md`, and a
+  proportional-trim rule in `editing-and-assembly.md` that disagreed with its own fixed-frame rule
+  for exactly the slow gestures this package recommends most.
+- Stale doc claims: the reference count, the next free F-code, the "stays lean" comparison row, and
+  the `LICENSE` file, which appended a non-MIT restriction while the frontmatter declared MIT.
+
+### Added
+
+- **Video-to-video as the fifth control surface.** Restyle, relight, regrade, reframe and
+  performance transfer over existing footage were absent from the capability matrices, the prompt
+  shapes and the repair ladder, though the description advertised working from existing video. It is
+  now a matrix row in both adapter files and rung **L4.5** on the cost ladder — one generation, keeps
+  the take — resolving F12, F16, F17 and framing-only F9, which previously jumped to rebuilding the
+  keyframe.
+- **Cross-cutting and time compression.** The cut-motivation taxonomy had no entry for juxtaposing
+  two lines of action, and nothing said why a run of shots reads as time passing rather than as a
+  list. Both are now sections in `editing-and-assembly.md`, with a `Thread` column in the beat sheet
+  so parallel action can be planned upstream.
+- **Two-hander lighting** in `lighting-and-color.md`, which was written end to end for a single
+  subject while two-hander dialogue is the package's default drama coverage.
+- **Sound perspective**: a level/filter/reverb table across the four space cases, and a `Space`
+  column in the sound plan, so a bed no longer sits at one perspective from wide to close-up.
+- **The axis of action for three or more people**, which was defined only for pairs.
+- **Per-family blocks in `image-model-adapters.md`**, which had none while the video side had twelve.
+- **`evals/run.md`** — grader prompt, pass criteria, ship bar — and a CI job that validates
+  `evals.json` and the `SKILL.md` frontmatter. The suite had never been executed; it now has a
+  procedure and a build that fails when it drifts.
+- **Capability snapshot dates** in both adapter files. Nine "as of writing" hedges carried no date
+  anywhere, so nothing said what was due for recheck.
+- **Routing that was missing**: a staging/blocking row, `example_comparisons.md` (the package's one
+  orphan file), `production-workflow.md` on the shot-list row, `continuity-bible.md` at Step 5, and
+  `qc-checklist.md` on the keyframe row it gates.
+- **A defined fallback for unnamed directors.** Naming a director with no module was undefined
+  behaviour; the skill now says so, names the nearest module and the axis it differs on, and builds
+  an ad-hoc lens rather than substituting silently.
+- **Style-lens application at Steps 7, 8 and 10.** The lens was declared at Step 4 and then never
+  mentioned again at the steps it is supposed to override — including Step 8, which Step 4 calls the
+  one that matters most.
+- **Scoped reads.** The partial-read instruction that existed only for `failure-modes.md` now covers
+  the other three large index-plus-sections references.
+- **27 eval cases (30 → 57).** All 20 director lenses now covered (12 had none), prompt shapes S3 and
+  S4 forced, over-production tested, the no-artifact repair path tested against the guardrail it was
+  previously written to violate, and every output mode above one case.
+
 ## [2.0.0] - 2026-07-27
 
-A depth release. v1.x knew the vocabulary of directing; v2 knows the craft behind it — lens choice, lighting ratios, continuity geometry, staging, sound, editing, and the operational reality of running a generation queue. The pipeline grew from 10 steps to 13, output modes from 6 to 10, references from 4 to 12, director lenses from 14 to 20, and `SKILL.md` gained an explicit routing table so depth loads on demand instead of all at once.
+A depth release. v1.x knew the vocabulary of directing; v2 knows the craft behind it — lens choice, lighting ratios, continuity geometry, staging, sound, editing, and the operational reality of running a generation queue. The pipeline grew from 10 steps to 13, output modes from 6 to 10, references from 4 to 13, director lenses from 14 to 20, and `SKILL.md` gained an explicit routing table so depth loads on demand instead of all at once.
 
 ### Added
 
@@ -127,7 +205,8 @@ Findings from an adversarial verification pass and three live dry runs of the fi
 - `evals/evals.json` with 3 baseline cases.
 - Bilingual README (EN + 中文), MIT license.
 
-[Unreleased]: https://github.com/wuwangzhang1216/DirectorSKILL/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/wuwangzhang1216/DirectorSKILL/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/wuwangzhang1216/DirectorSKILL/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/wuwangzhang1216/DirectorSKILL/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/wuwangzhang1216/DirectorSKILL/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/wuwangzhang1216/DirectorSKILL/compare/v1.0.0...v1.1.0

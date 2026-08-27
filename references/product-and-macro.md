@@ -94,7 +94,7 @@ Do not ask for both directions at once: `no text` in the negatives and a legible
 
 ## The shot grammar of a product spot
 
-Six shots. Most spots use four of them.
+Six shots. Most spots use four of them. The durations below are the hold each shot needs to read at a 30 s runtime; at 15 s and 6 s the second-by-second layouts further down govern instead, and every hold compresses to fit them.
 
 | Shot | What it must show | Lens and light | Duration | AI risk | Generate it? |
 |---|---|---|---|---|---|

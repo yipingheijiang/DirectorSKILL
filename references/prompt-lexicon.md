@@ -325,7 +325,7 @@ Same shot at 67 words, cut in the order above:
 The camera pushes in slowly along the lens axis; it does not pan, tilt, zoom, or drift. She stands still on the platform, hands in her coat pockets. She turns her head left to look down the track and holds there. Rain streaks past the platform lamp behind her. End with her head turned and her body unmoved. Same face, same coat. No face change, no text.
 ```
 
-What went, in order: the style block and "8K" (item 1); hair, coat colour, location, dusk, and the five-clause invariant list, all already in the still (item 2); steam, the board, and the pigeons, leaving rain as the one element (item 3); seven of nine negatives (item 4); the second camera move (item 5); the "and… and… and…" chain, rewritten as short declaratives (item 6); "as if she had been waiting" (item 7). What survived: turns the head, left, and holds — verb, direction, end state.
+What went, in order: the style block and "8K" (item 1); hair, coat colour, location, dusk, and the five-clause invariant list, all already in the still (item 2); steam, the board, and the pigeons, leaving rain as the one element (item 3); nine of the ten negatives, with an identity negative added back in their place because identity drift is the one class this shot actually invites (item 4); the second camera move (item 5); the "and… and… and…" chain, rewritten as short declaratives (item 6); "as if she had been waiting" (item 7). What survived: turns the head, left, and holds — verb, direction, end state.
 
 ## EN to 中文 craft terms
 
@@ -333,18 +333,18 @@ For Chinese-UI tools, write native Chinese prompts rather than translating word 
 
 ### 景别 shot sizes
 
-| EN | 中文 |
-|---|---|
-| extreme wide shot | 大远景 |
-| wide shot / long shot | 远景 |
-| full shot | 全景 |
-| medium long shot | 中全景 / 中远景 |
-| medium shot | 中景 |
-| medium close-up | 近景 |
-| close-up | 特写 |
-| extreme close-up | 大特写 |
-| two-shot | 双人镜头 |
-| insert / detail shot | 插入镜头 / 细节镜头 |
+Six rungs, and they are the ladder owned by [cinematic-language.md](cinematic-language.md) — the one the two-size-step cut rule is counted on. The other trade sizes you will hear are aliases *inside* a rung, never extra rungs: count 全景 or 中全景 as steps of their own and a two-step cut silently becomes a one-step stutter.
+
+| Rung | 中文 to send | Aliases inside the rung |
+|---|---|---|
+| EWS / extreme wide | 大远景 | — |
+| WS / wide | 远景 | 全景 (whole figure, tight end of the rung), 中全景 / 中远景 (knees up) |
+| MS / medium | 中景 | — |
+| MCU / medium close | 近景 | — |
+| CU / close-up | 特写 | — |
+| ECU / extreme close | 大特写 | — |
+
+双人镜头 (two-shot) and 插入镜头 / 细节镜头 (insert / detail shot) name what is in the frame, not how big it is — pair each with a rung.
 
 ### 机位与角度 angles
 
@@ -366,8 +366,8 @@ For Chinese-UI tools, write native Chinese prompts rather than translating word 
 | static / locked | 固定镜头 |
 | dolly in / push-in | 推镜 |
 | dolly out / pull-back | 拉镜 |
-| pan | 摇镜头 / 横摇（左右摇） |
-| tilt | 摇镜头 / 竖摇（上下摇、俯仰摇） |
+| pan | 横摇 / 左右摇（机位不动，水平方向摇） |
+| tilt | 纵摇 / 竖摇（机位不动，上下俯仰） |
 | truck / crab | 移镜头 / 横移 / 平移 |
 | pedestal up-down | 升降（机位垂直升降，角度不变） |
 | crane / boom | 摇臂镜头 / 升降镜头（大幅升降并重新构图） |
@@ -381,7 +381,7 @@ For Chinese-UI tools, write native Chinese prompts rather than translating word 
 | dolly zoom | 滑动变焦 / 希区柯克变焦 |
 | long take | 长镜头 |
 
-Two traps in that table. 长镜头 is a **long take** — a shot of long duration — and never a long lens; the long lens is 长焦镜头, one character apart and a completely different instruction. And 推 / 拉 move the camera while 变焦 changes the focal length, so write 推镜 when you want the body to travel and 变焦推近 when you want the lens to do it; a model given 推近 alone will pick one at random.
+Three traps in that table. 摇镜头 names the family and not the axis, so it is never what you send: 横摇 for a pan, 纵摇 for a tilt, and the bare 摇镜头 leaves the model to pick an axis for you. 长镜头 is a **long take** — a shot of long duration — and never a long lens; the long lens is 长焦镜头, one character apart and a completely different instruction. And 推 / 拉 move the camera while 变焦 changes the focal length, so write 推镜 when you want the body to travel and 变焦推近 when you want the lens to do it; a model given 推近 alone will pick one at random.
 
 ### 灯光 lighting
 
@@ -497,7 +497,7 @@ EN: Static medium shot, camera at waist height. A man in a waxed cotton overcoat
 
 ## Before and after
 
-Eight pairs. Each ends with the single change that mattered — not the whole rewrite, the one edit that moved the result.
+Eight pairs. Each ends with the single change that mattered — not the whole rewrite, the one edit that moved the result. Every After is written to be sent as an image-to-video prompt, so each sits inside the 40-80 word budget in *Token economy* above; the two that run over say underneath what bought the excess.
 
 ### Character performance
 
@@ -506,7 +506,7 @@ Before: A woman stands at a door holding a gift, feeling conflicted and emotiona
 ```
 
 ```text
-After: Locked medium shot at chest height. She faces the closed apartment door, a brown paper parcel held against her chest in the left hand, the right hand raised near the jamb with the knuckles about 5 cm off the wood. Over two beats the right hand lowers to her side without touching the door. Her chin drops slightly and her jaw sets. She turns her shoulders left and walks out of frame left at a slow, even pace, the parcel still against her chest. End on the closed door and the unmoved handle. Same face, same grey coat, same parcel, same corridor. The door never opens. No text, no watermark, no extra people.
+After: Locked medium shot at chest height. She faces the closed door, the right hand raised with the knuckles about 5 cm off the wood. Over two beats that hand lowers to her side without touching the door. Her jaw sets. She turns her shoulders left and walks out of frame left, slow and even. End on the closed door and the unmoved handle. Same face, same coat, same parcel. The door never opens. No text, no extra people.
 ```
 
 The one change: "hesitates" became a raised hand that lowers without ever touching the door.
@@ -518,7 +518,7 @@ Before: A busy market, lots of people moving around, lively atmosphere, dramatic
 ```
 
 ```text
-After: Static wide shot, camera at chest height. The soup vendor in the foreground keeps ladling at a steady rhythm. Behind him, shoppers drift right to left in a continuous stream; nobody stops and nobody faces the lens. Two figures cross the near foreground and exit frame left. Steam rises off the pot and bends left with the draught of the crowd. End with the vendor still ladling and the stream unbroken. No one looking at camera, no extra vendors, no text.
+After: Static wide shot, camera at chest height. The soup vendor in the foreground keeps ladling steadily. Behind him, shoppers drift right to left in a continuous stream; nobody stops and nobody faces the lens. Two figures cross the foreground and exit frame left. Steam rises off the pot and bends left with the draught of the crowd. End with the vendor still ladling and the stream unbroken. No one looking at camera, no extra vendors, no text.
 ```
 
 The one change: gave the crowd one direction and anchored the shot to one repeating foreground action.
@@ -554,10 +554,10 @@ Before: 1930s Shanghai street at night, a man in period clothes walks, very cine
 ```
 
 ```text
-After: Static medium-wide, camera at waist height. A man in a waxed cotton overcoat walks left to right across wet cobblestone at an unhurried pace, hands in pockets, the coat hem swinging with each step. A single gas-mantle streetlamp behind him throws a hard rim on his shoulders, and the shadow it casts ahead of him swings across the wet cobblestone toward camera as he passes under it. Rain beads on the coat and runs off the shoulders. He exits frame right and the empty wet street holds. Same face, same coat, same street. No moulded plastic, no printed or backlit signage, no fluorescent light, no rubber soles, no text, no watermark.
+After: Static medium-wide, camera at waist height. A man in a waxed cotton overcoat walks left to right across wet cobblestone, unhurried, the coat hem swinging with each step. A single gas-mantle streetlamp behind him throws a hard rim on his shoulders; his shadow swings across the cobblestone as he passes. Rain beads and runs off the coat. He exits frame right and the empty wet street holds. Same face, same coat, same street. No moulded plastic, no printed or backlit signage, no fluorescent light, no rubber soles, no text, no watermark.
 ```
 
-The one change: "period clothes, film noir" became two material words — waxed cotton, wet cobblestone — and one named light source. Note also what the negatives became: five nameable instances instead of "no modern objects", and no ban on cars or neon, both of which are period-correct in 1930s Shanghai and would have cost the frame something real. For the local nouns that would tighten this further — 弹格路, 石库门, 阴丹士林蓝布, 煤油灯 — see the noun banks above.
+The one change: "period clothes, film noir" became two material words — waxed cotton, wet cobblestone — and one named light source. Note also what the negatives became: four nameable era instances instead of "no modern objects", and no ban on cars or neon, both of which are period-correct in 1930s Shanghai and would have cost the frame something real. This is the first of the two Afters that run over: 91 words, where the era list is 18 of them and is the lesson of the pair — the direction around it comes in at 73, inside the band. On a tool with a negative field those 18 words leave the positive prompt entirely and it is in band as written. For the local nouns that would tighten this further — 弹格路, 石库门, 阴丹士林蓝布, 煤油灯 — see the noun banks above.
 
 ### Action
 
@@ -566,7 +566,7 @@ Before: The fighter attacks powerfully and dramatically, fast intense action, dy
 ```
 
 ```text
-After: Camera: one move only — a handheld follow level with his shoulders, drifting right with him. It does not pan, zoom, orbit, or whip. He plants his left foot, drives his right shoulder forward, and swings once. The blow lands on the heavy bag; the bag folds around the impact and swings away. Dust jumps off the seams of the bag and hangs in the light. His shoulders drop on the exhale. End with the bag at the top of its swing and his fist already withdrawn. Same face, same hand wraps, same gym. No extra fighters, no speed ramp, no motion smearing.
+After: Camera: one handheld follow at his shoulders, drifting right. It does not pan, zoom, orbit, or whip. He plants his left foot, drives his right shoulder forward, and swings once. The blow lands; the bag folds around it and swings away. Dust jumps off the bag seams and hangs in the light. End with the bag at the top of its swing, his fist withdrawn. Same face, same hand wraps, same gym. No extra fighters, no speed ramp, no smearing.
 ```
 
 The one change: one strike with a stated impact result, replacing "attacks powerfully".
@@ -587,7 +587,7 @@ longer, then turns her head to the window. End with both still, neither looking 
 Same faces, same kitchen, same light. No cutaway, no camera move, no third person, no subtitles.
 ```
 
-The one change: each speaker got a permanent visual label, and each line got one body part that stops moving on it.
+The one change: each speaker got a permanent visual label, and each line got one body part that stops moving on it. The second of the two Afters that run over: 89 words, of which the two spoken lines and their speaker labels are 24 — the direction around the dialogue is 65, inside the band.
 
 ### Transition
 

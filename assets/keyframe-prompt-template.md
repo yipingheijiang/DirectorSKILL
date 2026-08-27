@@ -40,9 +40,9 @@ constraints tail and is the one string you select from rather than paste whole, 
 given under it.
 
 ```text
-ID_COURIER: a thin 19-year-old male courier, shaved neck, wool cap pushed back off his
-forehead, grey padded cotton jacket buttoned to the throat, canvas satchel strap across his
-chest on the left shoulder, chapped knuckles on the right hand
+ID_COURIER: a 19-year-old Chinese man with a narrow jaw, deep-set eyes under a low brow, a
+2 cm scar through the left eyebrow, black hair clipped short and shaved high at the neck, in
+a grey padded cotton jacket buttoned to the throat with one bone button missing at the collar
 
 LOCK_LANDING: third-floor landing of a 1937 Shanghai lilong apartment block, peeling dark-green
 wainscot to waist height, cracked cream plaster above, worn red floor tile, dark-stained door
@@ -73,16 +73,18 @@ add one sentence for this camera. In this scene every setup sits on one side of 
 bulb reads high camera-left 45°, the door plane sits camera-right, and the window is behind him at
 camera-left rear; write that sentence in each prompt, never back into the string.
 
-Note what `ID_COURIER` does: it bundles slot 3 (face and build) with slot 5 (wardrobe). That is
-fine for a scene where the costume never changes, and it saves tokens. Split it the moment the
-project has a second fitting or a costume change — otherwise a wardrobe edit in reel two silently
-rewrites the face. When you split, keep the face half under the same name and add a fitting
-string (`FIT_COURIER`), and record both in the continuity bible.
+Note what `ID_COURIER` does: it is face structure first and ends on exactly one wardrobe anchor,
+the jacket with its missing collar button, so its tail reaches into slot 5. Everything else the
+character wears — the cap, the satchel — stays in slot 5 and never migrates back into the string.
+Split the anchor off the moment the project has a second fitting or a costume change; otherwise a
+wardrobe edit in reel two silently rewrites the face. When you split, keep the face half under the
+same name and add a fitting string (`FIT_COURIER`), and record both in the continuity bible.
 
-The scene's checkable anchor is not on the actor. The book bans rendered numerals, so the door
-number cannot be the identifier: use the **chip in the door's lower-left corner** and the
-**unbroken warm line under the door**. Both survive at every shot size in this scene, and either
-one missing is provable drift.
+`ID_COURIER` carries its own checkable landmark, the scar through the left eyebrow — that is what
+proves identity. The scene needs a second anchor that is not on the actor at all, because half the
+shots do not hold his face. The book bans rendered numerals, so the door number cannot be it: use
+the **chip in the door's lower-left corner** and the **unbroken warm line under the door**. Both
+survive at every shot size in this scene, and either one missing is provable drift.
 
 ## Template — first frame
 
@@ -103,27 +105,29 @@ that is where `SH02` starts; the raised knuckles are something the video prompt 
 Filled — `UTD_SC07_SH02_v03_kf-first`, the hand that cannot knock:
 
 ```text
-UTD_SC07_SH02 kf-first. Medium close-up, eye level, camera at 1.6m, 50mm. A thin 19-year-old male
-courier, shaved neck, wool cap pushed back off his forehead, grey padded cotton jacket buttoned to
-the throat, canvas satchel strap across his chest on the left shoulder, chapped knuckles on the
-right hand. He stands squared to the door 60cm out, both arms down, the right hand at his thigh
-with the fingers half closed, his weight settled forward toward the door; eyes level on the door
-face. A cream envelope, white face out, held up at chest height in his left hand. Third-floor
-landing of a 1937 Shanghai lilong apartment block, peeling dark-green wainscot to waist height,
-cracked cream plaster above, worn red floor tile, dark-stained door with a brass knob and a chipped
-lower-left corner, a stairwell window at the head of the stairs opposite the door; door-side setup,
-the door plane camera-right, the window behind him at camera-left rear. A single bare filament bulb
-hanging over the stairhead, warm, hard, above head height, 5:1 lit side to shadow side with no fill
-but plaster bounce; cold daylight from the stairwell window behind him, rimming his back and cap
-and never reaching his shadow side; the door face stays well under; the only light on the door is a
-thin warm line spilling from the 4cm gap beneath it. In this setup the bulb reads high camera-left
-at 45 degrees and rakes the side of his face. His head and near shoulder occupy frame-left, the
-dark door plane fills frame-right, envelope edge low-left, the cold rim along the back of his cap.
-35mm film stock, fine grain, low saturation, high contrast in the lower third, dull green and
-cracked cream against worn red, the envelope the only pure white. The pose must read as a knock
-about to begin. 16:9. No rendered text, signage or numerals; no watermark; no wristwatch, no rubber
-soles, no printed logos; no face or costume change; the brass number plate defocused or out of
-frame; the right hand still down and not touching the wood.
+UTD_SC07_SH02 kf-first. Medium close-up, eye level, camera at 1.6m, 50mm. A 19-year-old Chinese man
+with a narrow jaw, deep-set eyes under a low brow, a 2 cm scar through the left eyebrow, black hair
+clipped short and shaved high at the neck, in a grey padded cotton jacket buttoned to the throat
+with one bone button missing at the collar. He stands squared to the door 60cm out, both arms down,
+the right hand at his thigh with the fingers half closed and the knuckle scrape showing, his weight
+settled forward toward the door; eyes level on the door face. A wool cap pushed back off his
+forehead, a canvas satchel strap across his chest on the left shoulder, and a cream envelope, white
+face out, held up at chest height in his left hand. Third-floor landing of a 1937 Shanghai lilong
+apartment block, peeling dark-green wainscot to waist height, cracked cream plaster above, worn red
+floor tile, dark-stained door with a brass knob and a chipped lower-left corner, a stairwell window
+at the head of the stairs opposite the door; door-side setup, the door plane camera-right, the
+window behind him at camera-left rear. A single bare filament bulb hanging over the stairhead,
+warm, hard, above head height, 5:1 lit side to shadow side with no fill but plaster bounce; cold
+daylight from the stairwell window behind him, rimming his back and cap and never reaching his
+shadow side; the door face stays well under; the only light on the door is a thin warm line
+spilling from the 4cm gap beneath it. In this setup the bulb reads high camera-left at 45 degrees
+and rakes the side of his face. His head and near shoulder occupy frame-left, the dark door plane
+fills frame-right, envelope edge low-left, the cold rim along the back of his cap. 35mm film stock,
+fine grain, low saturation, high contrast in the lower third, dull green and cracked cream against
+worn red, the envelope the only pure white. The pose must read as a knock about to begin. 16:9. No
+rendered text, signage or numerals; no watermark; no wristwatch, no rubber soles, no printed logos;
+no face or costume change; the brass number plate defocused or out of frame; the right hand still
+down and not touching the wood.
 ```
 
 Six classes in the tail, and note that it is not `NEG_BASE` pasted whole. Two base classes were
@@ -154,28 +158,29 @@ He has completed [action]; now [new static pose]. [Prop in its new state].
 Filled — `UTD_SC07_SH04_v06_kf-last`, the irreversible delivery:
 
 ```text
-UTD_SC07_SH04 kf-last. Medium shot, low, camera 40cm off the floor, tilted up 10 degrees, 35mm.
-A thin 19-year-old male courier, shaved neck, wool cap pushed back off his forehead, grey padded
-cotton jacket buttoned to the throat, canvas satchel strap across his chest on the left shoulder,
-chapped knuckles on the right hand. He has completed feeding the envelope under the door; now he
-is still crouched on his heels with the first two fingers of his right hand flat against the wood
-just above the gap, both hands otherwise empty and open, forearms resting on his knees. No
-envelope is visible anywhere in frame. Third-floor landing of a 1937 Shanghai lilong apartment
-block, peeling dark-green wainscot to waist height, cracked cream plaster above, worn red floor
-tile, dark-stained door with a brass knob and a chipped lower-left corner, a stairwell window at
-the head of the stairs opposite the door; door-side low setup, the door plane camera-right. A
-single bare filament bulb hanging over the stairhead, warm, hard, above head height, 5:1 lit side
-to shadow side with no fill but plaster bounce; cold daylight from the stairwell window behind him,
-rimming his back and cap and never reaching his shadow side; the door face stays well under; the
-only light on the door is a thin warm line spilling from the 4cm gap beneath it. In this setup the
-bulb reads high camera-left and sits on his back and cap; the gap line underlights his hands from
-20cm; his face two stops down. He is crouched frame-left, the door plane fills the right two-thirds
-with the chipped lower-left corner visible in it, the warm line under the door unbroken again and
-running the full width. 35mm film stock, fine
-grain, low saturation, warmest and lowest frame of the scene, dull green and cracked cream against
-worn red. Same face, same wardrobe, same room, same lamp, same lens as kf-first. 16:9. No rendered
-text, signage or numerals; no watermark; no wristwatch, no rubber soles, no printed logos; no face
-or costume change; no envelope still visible; no third hand.
+UTD_SC07_SH04 kf-last. Medium shot, low, camera 40cm off the floor, tilted up 10 degrees, 35mm. A
+19-year-old Chinese man with a narrow jaw, deep-set eyes under a low brow, a 2 cm scar through the
+left eyebrow, black hair clipped short and shaved high at the neck, in a grey padded cotton jacket
+buttoned to the throat with one bone button missing at the collar. He has completed feeding the
+envelope under the door; now he is still crouched on his heels with the first two fingers of his
+right hand flat against the wood just above the gap, the knuckle scrape up, both hands otherwise
+empty and open, forearms resting on his knees. The same wool cap pushed back off his forehead and
+the canvas satchel strap across his chest on the left shoulder. No envelope is visible anywhere in
+frame. Third-floor landing of a 1937 Shanghai lilong apartment block, peeling dark-green wainscot
+to waist height, cracked cream plaster above, worn red floor tile, dark-stained door with a brass
+knob and a chipped lower-left corner, a stairwell window at the head of the stairs opposite the
+door; door-side low setup, the door plane camera-right. A single bare filament bulb hanging over
+the stairhead, warm, hard, above head height, 5:1 lit side to shadow side with no fill but plaster
+bounce; cold daylight from the stairwell window behind him, rimming his back and cap and never
+reaching his shadow side; the door face stays well under; the only light on the door is a thin warm
+line spilling from the 4cm gap beneath it. In this setup the bulb reads high camera-left and sits
+on his back and cap; the gap line underlights his hands from 20cm; his face two stops down. He is
+crouched frame-left, the door plane fills the right two-thirds with the chipped lower-left corner
+visible in it, the warm line under the door unbroken again and running the full width. 35mm film
+stock, fine grain, low saturation, warmest and lowest frame of the scene, dull green and cracked
+cream against worn red. Same face, same wardrobe, same room, same lamp, same lens as kf-first.
+16:9. No rendered text, signage or numerals; no watermark; no wristwatch, no rubber soles, no
+printed logos; no face or costume change; no envelope still visible; no third hand.
 ```
 
 Its `kf-first` is that block with one substitution, which is what "one action apart" means in
@@ -232,11 +237,13 @@ Filled — `UTD_CHAR-courier_v01_ref-body`:
 
 ```text
 UTD_CHAR-courier_v01 ref-body. Four views of the same person, evenly spaced left to right: front,
-three-quarter left, full profile left, full body front. A thin 19-year-old male courier, shaved
-neck, wool cap pushed back off his forehead, grey padded cotton jacket buttoned to the throat,
-canvas satchel strap across his chest on the left shoulder, chapped knuckles on the right hand.
-Neutral expression, relaxed shoulders, arms at sides, gaze to camera; right hand turned so the
-chapped knuckles are visible. Cloth shoes with worn welts. Flat frontal light, 5600K, about 1:1 lit
+three-quarter left, full profile left, full body front. A 19-year-old Chinese man with a narrow
+jaw, deep-set eyes under a low brow, a 2 cm scar through the left eyebrow, black hair clipped short
+and shaved high at the neck, in a grey padded cotton jacket buttoned to the throat with one bone
+button missing at the collar. Thin, narrow-shouldered under the jacket. Wool cap pushed back off
+his forehead, canvas satchel strap across his chest on the left shoulder. Neutral expression,
+relaxed shoulders, arms at sides, gaze to camera; right hand turned so the knuckle scrape is
+visible. Cloth shoes with worn welts. Flat frontal light, 5600K, about 1:1 lit
 side to shadow side so neither side reads as the shadow side, no rim. Plain mid-grey seamless
 background. No
 lens distortion; subject occupies 80% of frame height. 1:1. No props except the satchel. No text,
@@ -308,6 +315,8 @@ tick-box form of the reasoned gate in image-model-adapters §9; the scored form 
 - [ ] No numerals, signage, or text appear — the number plate is defocused or out of frame.
 - [ ] Era check: nothing in frame post-dates the stated year, against the book's `must avoid`.
 - [ ] Focal length is inside the book's kit; nothing wider than 35mm in this scene.
+- [ ] Apparent perspective matches the stated focal length — no wide-angle nose or bowed room
+      edges on a 50mm or longer frame, no flattened planes on a 35mm. Video cannot repair this.
 - [ ] The key direction matches this row's `Light dir` cell in the shot plan, and the ratio matches
       the invariant.
 - [ ] Aspect matches delivery; you are not planning to crop later.

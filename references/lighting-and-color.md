@@ -50,7 +50,7 @@ Ratio is a continuous dial and the interesting work is moving it inside a scene:
 
 ## Key direction
 
-Direction is stated relative to camera, never relative to the room — the model has no model of the room. The same rule governs faces: write "the camera-left cheek", never "his left cheek". For a subject facing camera, anatomical left is screen right, and generators split on which one you meant, so naming the camera side removes a coin flip that costs you a re-roll.
+Direction is stated relative to camera, never relative to the room — the model has no model of the room. That is the rule for the per-shot direction sentence; the scene invariant that gets pasted into every prompt is world-space instead, for the reason given under the continuity section below. The same rule governs faces: write "the camera-left cheek", never "his left cheek". For a subject facing camera, anatomical left is screen right, and generators split on which one you meant, so naming the camera side removes a coin flip that costs you a re-roll.
 
 | Direction | What it does to a face | What it does to a lie |
 |---|---|---|
@@ -77,6 +77,36 @@ Falloff follows the inverse-square law for anything small enough to act as a poi
 - Far from the source, or under a large one (overcast, a wall of window): movement changes nothing. There is no refuge in the frame.
 
 Choose falloff by whether the scene should offer somewhere to hide. Then say so: "one candle on the table; her face is bright and the wall two metres behind her is black" produces steep falloff. "Candlelit room" produces an evenly amber room with no falloff at all, because that is the average of everything labeled candlelit.
+
+## Two faces in one frame
+
+A two-hander is one lighting design, not two. The rule that makes the coverage cut: one key direction in the room, true for both faces; what differs per face is the ratio. Give each actor their own independently placed key and you get two people standing in different weather, and no reverse will reconcile them.
+
+Which face carries which ratio is the dramatic decision. Matched ratios say the scene is between equals; a two-stop spread says one of them is being read and the other is doing the reading. When the balance shifts mid-scene, move the spread, never the direction.
+
+| Setup | Geometry, in world space | Per-face ratio | What it says | Will a model hold it |
+|---|---|---|---|---|
+| Cross-key | Two sources upstage of the line between them, one past each shoulder; each is a three-quarter front key on the far face and a kicker on the near one | Matched, usually about 3:1 on both | Two people of equal standing; the negotiation, the interview, the argument nobody is winning yet | Only from a keyframe. Text alone collapses it into one frontal source and flattens both faces |
+| One shared key off the end of the line | A single source beyond one of them — window at her back, doorway past his shoulder | Fixed asymmetry: the one facing the source reads near-frontal at about 2:1; the one with their back to it carries a rim and sits about 6:1 on the camera side | Status, and it does not swap on the cut, so it reads as a fact about them rather than as coverage | Medium. Name which body the source sits behind and it usually survives; it drifts on the tighter singles |
+| Source between them | A practical on the axis itself — candle, table lamp, fire, laptop | Both keyed from the inside of the frame, shadow sides falling outward to the frame edges | Conspiracy, intimacy, a shared secret; the light belongs to the pair and not to the room | High. The practical is visible in frame, so the model has an anchor. The most reliable two-hander light in AI |
+| Split pool | One body inside a pooled source, the other at its edge or outside it | 2:1 against 8:1 or steeper | One of them is available and one is withholding; the frame has already picked a side | Medium-high, if you put the boundary on a visible surface — the edge of the light on the table or the floor between them |
+
+On the reverse, nothing in the room changes and every camera-relative word does: a key that reads camera-left on her single reads camera-right on his, same lamp, opposite half of frame. Write the invariant world-space and derive the phrasing per shot, as in the continuity section below. Then check one thing on every reverse — whichever face was the darker of the two must still be the darker one. The ratio spread is the identity of the setup; if it swaps, the audience reads a scene change nobody wrote.
+
+The AI reality: generators light the frame, not the faces, and their default two-shot is one soft frontal source with both faces at a mild 2:1. What survives from text alone is a named practical visible in frame, and any big graphic contrast — one face in a pool and one outside it, or one face against a lit partner in silhouette. What must be baked into the keyframe is cross-key, any matched pair of ratios, and any rim separating the far face from a dark background. Generate the two-shot first, approve it, and derive both singles from that file rather than writing each from scratch — see [image-model-adapters.md](image-model-adapters.md).
+
+Worked, a kitchen at night, split pool, on the beat where one of them decides to answer:
+
+```text
+Two-shot, 40 mm. One bulb over the sink, nothing else in the room switched on. She stands
+in the pool at frame-left, shadow side about one stop under. He is at the table a metre and
+a half deeper into the room, outside the pool: only the spill off her shoulder and off the
+white fridge door reaches him, his shadow side is three stops under, and his lit edge is a
+thin line down the cheekbone facing her. No fill. Nothing lights him from his own side of
+the room. The edge of the light falls across the table between them.
+```
+
+Cut to his single and the bulb becomes camera-right; the source, height, quality and color are pasted unchanged. His ratio is the only field allowed to move, and it moves once — from three stops under to one and a half — on the line where he answers.
 
 ## Motivation: the practicals catalogue
 
@@ -218,19 +248,23 @@ The stacking warning: use at most two. Three or more grading descriptors get ave
 
 Lighting is lost between shots far more often than inside them. Symptom-first repairs live in [failure-modes.md](failure-modes.md); the preventive discipline is here.
 
-Write one lighting invariant clause per scene and paste it verbatim into every prompt in that scene. Do not paraphrase it between shots — paraphrase is how the key drifts. The one field you may deliberately move is the stop difference, and only on the shots where the ratio change is itself the beat; source, direction, height, quality and color stay word for word. Shape:
+Write one lighting invariant clause per scene and paste it verbatim into every prompt in that scene. Do not paraphrase it between shots — paraphrase is how the key drifts. The clause is anchored in world space: the source, where it sits in the room, its height, its quality, its color and its ratio. Every field in it is true of every camera position in the scene, which is what makes it pasteable unedited. The one field you may deliberately move is the stop difference, and only on the shots where the ratio change is itself the beat; source, place, height, quality and color stay word for word.
+
+Where that light lands relative to *this* camera is not in the clause. It is derived per shot from the world anchor, recorded in the `Light dir` column of [shot-plan-template.md](../assets/shot-plan-template.md), and added to that shot's prompt as one extra sentence — because the model still needs camera-relative words on the face (see Key direction above), and "camera-left" is true of one setup and false of its reverse. Freeze a camera-relative phrase into the pasted string and every reverse in the scene inherits a flipped key, which is exactly the break the repair list below exists to undo. Shape:
 
 ```text
-Lighting: [source] from [direction relative to camera] at [height], [hard|soft],
+Lighting: [source] [where it sits in the room] at [height], [hard|soft],
 shadow side about [N] stops under, [color phrase], background [level].
+This shot: key [direction relative to this camera], [one visible consequence in frame].
 ```
 
 ```text
-Lighting: single green-shaded desk lamp from camera-left at head height, hard,
+Lighting: single green-shaded desk lamp on the far corner of the desk at head height, hard,
 shadow side about two stops under, tungsten warm, background falling to black.
+This shot: key from camera-left; the nose shadow falls across his camera-right cheek.
 ```
 
-Reverse angles are the exception that must be handled by hand. Camera-relative direction inverts when you cut around the axis: if the lamp is camera-left on the A-side coverage, it is camera-right in the reverse. Store the world-anchored fact in the continuity bible ("lamp is on the north wall"), and write the camera-relative phrase per shot. Get this backwards and the two angles will not intercut — see the axis and screen-direction rules in [cinematic-language.md](cinematic-language.md).
+Reverse angles are then a one-line edit rather than a rebuild. The pasted clause does not change — same lamp, same corner, same height, same color, same stop difference; only the per-shot line is rewritten, because camera-relative direction inverts when you cut around the axis: a lamp that reads camera-left on the A-side coverage reads camera-right in the reverse. Store the world-anchored fact once in the continuity bible ("lamp is on the north wall, above head height") and derive each shot's phrase from it rather than remembering it. Get this backwards and the two angles will not intercut — see the axis and screen-direction rules in [cinematic-language.md](cinematic-language.md).
 
 Shot size is the other silent breaker. On a wide, the source is usually in frame and the falloff is visible, so the model gets it right for free. Tighten to a close-up and the source leaves frame, and the model reverts to its default: soft frontal key, 2:1, no rim. Fix by naming the off-screen source plus one visible consequence inside the frame — "the lamp is out of frame camera-left; the shadow of his nose falls across his camera-right cheek, and the camera-right side of his face is nearly black." The consequence is what the model can actually draw; the source alone is an instruction it can ignore.
 
@@ -252,33 +286,34 @@ The control scene the director style modules and [genre-playbooks.md](genre-play
 | Time window | Night-for-night, no daylight anywhere in frame | Daylight would make the visit an errand; she does not want to be seen doing this |
 | Motivation | One caged bulkhead lamp high on the stairwell wall behind her, plus a warm tungsten strip leaking under the door | Two sources with opposed color and opposed meaning: the corridor she is in, and the room she will not enter |
 | Ratio | About 6:1 at the door (two and a half stops), opening to 3:1 as she turns to leave | She is withholding, then stops. The ratio move is the beat |
-| Direction | Key three-quarter back from camera-right; the door face itself throws nothing | Her face stays mostly shadow while she faces the door and only fills in on the turn |
+| Direction | Lamp on the stairwell wall opposite the door, above head height — three-quarter back on the door-facing setups; the door face itself throws nothing | Her face stays mostly shadow while she faces the door and only fills in on the turn |
 | Quality and falloff | Small caged source, hard, steep — the stairwell behind her goes black inside two metres | She needs somewhere to disappear to, and the falloff supplies it |
 | Grade | Crushed blacks, fine grain. Nothing else | Two descriptors, per the stacking rule above |
 
-Scene lighting invariant, pasted verbatim into every prompt in the scene:
+Scene lighting invariant, pasted verbatim into every prompt in the scene. No camera-relative word appears in it, which is why every angle can paste it:
 
 ```text
-Lighting: single caged bulkhead lamp high on the stairwell wall, three-quarter back from
-camera-right, small and hard, cool green-white, shadow side about two and a half stops under,
+Lighting: single caged bulkhead lamp high on the stairwell wall opposite the door, well above
+head height, small and hard, cool green-white, shadow side about two and a half stops under,
 plus a thin warm tungsten strip spilling under the door onto the concrete. No fill.
 Stairwell falls to black within two metres.
 ```
 
-Shot 2 — MCU, her face at the door — is the invariant plus one visible consequence, because the lamp is out of frame here:
+Shot 2 — MCU, her face at the door — is the invariant plus its per-shot line, which carries the camera-relative direction and one visible consequence, because the lamp is out of frame here:
 
 ```text
 Medium close-up. A woman faces a closed apartment door, a brown paper parcel held against her
-chest. Lighting: single caged bulkhead lamp high on the stairwell wall, three-quarter back
-from camera-right, small and hard, cool green-white, shadow side about two and a half stops
+chest. Lighting: single caged bulkhead lamp high on the stairwell wall opposite the door, well
+above head height, small and hard, cool green-white, shadow side about two and a half stops
 under, plus a thin warm tungsten strip spilling under the door onto the concrete. No fill.
-Stairwell falls to black within two metres. The lamp is out of frame: a hard edge of light
-runs down her camera-right cheekbone and jaw, the camera-left half of her face holds no
-detail, the wire cage throws a faint grid shadow on the wall beside her, and the warm strip
-lights only the toes of her shoes. She does not knock. Crushed blacks, fine grain.
+Stairwell falls to black within two metres. This shot: the lamp is out of frame behind her
+camera-right shoulder, three-quarter back — a hard edge of light runs down her camera-right
+cheekbone and jaw, the camera-left half of her face holds no detail, the wire cage throws a
+faint grid shadow on the wall beside her, and the warm strip lights only the toes of her
+shoes. She does not knock. Crushed blacks, fine grain.
 ```
 
-The reverse — camera behind her shoulder, looking at the door — is where this scene would normally break. That same lamp is now behind and to the left of camera, so it is no longer a back light at all: it becomes a near-frontal key from camera-left, the back of her coat and the door face carry it, and her body throws a hard shadow across the door toward camera-right. Only the camera-relative half of the clause is rewritten; the height, size, color and stop difference are untouched. The world-anchored fact — "the lamp is on the stairwell wall opposite the door, above head height" — is stored once in the [continuity bible](continuity-bible.md), and every shot's camera-relative phrasing is derived from it rather than remembered.
+The reverse — camera behind her shoulder, looking at the door — is where this scene would normally break. That same lamp is now behind and to the left of camera, so it is no longer a back light at all: it becomes a near-frontal key from camera-left, the back of her coat and the door face carry it, and her body throws a hard shadow across the door toward camera-right. The pasted clause does not lose a word — same lamp, same wall, same height, same color, same stop difference; only the per-shot line is rewritten. It is derived from the world-anchored fact stored once in the [continuity bible](continuity-bible.md) rather than remembered from the last prompt.
 
 ## Before and after
 

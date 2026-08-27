@@ -59,13 +59,13 @@ itself a story event you should be able to justify in one sentence.
 ## Per-shot five-layer table
 
 Columns follow the Mode H notation in [sound and dialogue](../references/sound-and-dialogue.md):
-`@t` is time from that shot's first frame, never program time. Absolute program timecodes live in
+`Space` names the shot size and any source not in the camera's room — `same room` when there is none — so the perspective moves with the coverage instead of sitting flat across every size. The four cases and their level, filter and reverb offsets are owned by [sound and dialogue](../references/sound-and-dialogue.md). `@t` is time from that shot's first frame, never program time. Absolute program timecodes live in
 one place only, [edit timeline template](edit-timeline-template.md), so a re-time changes one
 document instead of two. Write `none` in a cell you decided against; leave nothing blank.
 
-| Shot | In–Out | RT | AMB | FOL | SFX | MUS | Dialogue/VO | Silence |
-|---|---|---|---|---|---|---|---|---|
-| `SHnn` |  |  |  |  |  |  |  |  |
+| Shot | In–Out | Space | RT | AMB | FOL | SFX | MUS | Dialogue/VO | Silence |
+|---|---|---|---|---|---|---|---|---|---|
+| `SHnn` |  |  |  |  |  |  |  |  |  |
 
 Filled — `UTD_SC07`. The book's sound direction is explicit: no score anywhere in this scene, and
 the paper scraping tile is the loudest thing in it. There is no dialogue here, so 0 is notional and
@@ -74,13 +74,13 @@ every level below is read off the bands in
 spot-FX band rather than being promoted to 0, which keeps this sheet legible next to a scene that
 does have dialogue in it.
 
-| Shot | In–Out | RT | AMB | FOL | SFX | MUS | Dialogue/VO | Silence |
-|---|---|---|---|---|---|---|---|---|
-| `SH01` | 0:00–0:04 | Stairwell tone with the filament bulb's hum baked into it, 0.8s reverb tail, continuous, −34 | Street two floors down, distant, no traffic detail, −28 | Cloth shoes on tile, three crossing steps @0.4 / @1.1 / @1.7, the last one short; satchel canvas shift on the stop | none — the hum is continuous, so it belongs in RT and never gets its own cue | none — no score in this scene | none | none |
-| `SH02` | 0:04–0:09 | bed continues | Radio behind the door comes up @0.6 to −18, mid-band only, no intelligible words | Padded-jacket rustle as the arm rises @0.8; one swallow, close, @2.4; jacket settle @4.2 | none | none | none | none |
-| `SH03` | 0:09–0:12 | bed continues | Radio holds; street ducks 2 dB | none — deliberate | Chair scrape behind the door @1.5, the first hard sound in the scene | none | none | The book's 1.5s of near-silence, @0.0–@1.5. Not digital silence: the bed stays under, everything else out |
-| `SH04` | 0:12–0:18 | bed continues | Radio holds, unchanged | Knees and heels on tile @0.2; two fingers on wood @5.4 | Paper scraping tile @2.0–@4.6 at −6, the top of the spot-FX band and the loudest cue in the scene, alone in its band | none | none | none |
-| `SH05` | 0:18–0:22 | bed continues; tone tail runs 1.0s past picture | Radio and street unchanged — nothing acknowledges that he left | Two backing steps, then four descending, each 2 dB quieter, gone by @3.0 | none | none | none | none |
+| Shot | In–Out | Space | RT | AMB | FOL | SFX | MUS | Dialogue/VO | Silence |
+|---|---|---|---|---|---|---|---|---|---|
+| `SH01` | 0:00–0:04 | WS, stairwell — same room; street is outside heard from inside | Stairwell tone with the filament bulb's hum baked into it, 0.8s reverb tail, continuous, −34 | Street two floors down, distant, no traffic detail, −28 | Cloth shoes on tile, three crossing steps @0.4 / @1.1 / @1.7, the last one short; satchel canvas shift on the stop | none — the hum is continuous, so it belongs in RT and never gets its own cue | none — no score in this scene | none | none |
+| `SH02` | 0:04–0:09 | MCU, landing — same room; radio is through a closed door | bed continues | Radio behind the door comes up @0.6 to −18, mid-band only, no intelligible words | Padded-jacket rustle as the arm rises @0.8; one swallow, close, @2.4; jacket settle @4.2 | none | none | none | none |
+| `SH03` | 0:09–0:12 | CU, landing — same room; radio and chair are through a closed door | bed continues | Radio holds; street ducks 2 dB | none — deliberate | Chair scrape behind the door @1.5, the first hard sound in the scene | none | none | The book's 1.5s of near-silence, @0.0–@1.5. Not digital silence: the bed stays under, everything else out |
+| `SH04` | 0:12–0:18 | MS low, landing — same room; radio through the door, gap line at 20cm | bed continues | Radio holds, unchanged | Knees and heels on tile @0.2; two fingers on wood @5.4 | Paper scraping tile @2.0–@4.6 at −6, the top of the spot-FX band and the loudest cue in the scene, alone in its band | none | none | none |
+| `SH05` | 0:18–0:22 | WS, stairwell — same room; radio recedes through the door as he goes | bed continues; tone tail runs 1.0s past picture | Radio and street unchanged — nothing acknowledges that he left | Two backing steps, then four descending, each 2 dB quieter, gone by @3.0 | none | none | none | none |
 
 Reading it: the bed never breaks; only foley and spot FX respect the cuts; the radio enters on
 `SH02` and never leaves, so the room behind the door stays occupied for the rest of the scene.

@@ -40,15 +40,28 @@ Corollary — **strip model-generated audio**. Many video models emit their own 
 
 [sound-plan-template.md](../assets/sound-plan-template.md) carries the worksheet that records the per-shot decision, and links here rather than restating these ranges. Programme loudness is declared once, in the export block of [edit-timeline-template.md](../assets/edit-timeline-template.md) — web delivery typically lands between −16 and −14 LUFS integrated, so name the figure per project and check your destination platform's current spec rather than assuming one.
 
+### Sound perspective
+
+The layer table bands a level per layer; perspective is what moves an element inside its band. Every source carries the level, filter and reverb of the distance and the barrier between it and the camera, and a plan that reuses one bed unchanged across an extreme wide and a close-up is the single most audible giveaway of assembled-not-recorded sound. Offsets below are relative to the same element heard in the open, in the camera's own room, on the same dB-relative-to-dialogue scale.
+
+| Where the source is | Level | Filter | Reverb |
+|---|---|---|---|
+| Same room as camera | 0, the reference | Full band | The room's own tail, early reflections audible |
+| Through a partition — closed door, wall | −12 to −18 | LPF 600–900 Hz, 12 dB/oct or steeper | Far room's tail only, no near-room early reflections |
+| Outside heard from inside — window, street below | −10 to −16 | LPF 1.5–2.5 kHz, thin below 120 Hz unless the source is traffic | Near-room tail added on top: it enters, then reverberates where the camera is |
+| Off-screen versus on-screen, same room | −3 to −6 | Unchanged | Roughly half again as much tail; that wet/dry ratio is what places it out of frame |
+
+Shot size moves perspective with it. Hold the widest size as the reference; on a closer size of the same action bring foley up 3–6 dB and dry it, and reverse the move going wide. Leave room tone and ambience where they are — the bed is the one thing a cut must not move, per the continuity-glue rule above.
+
 ### Per-shot notation
 
 Compact one-line form, for shot-list and QC rows:
 
 ```text
-SND S02 | RT stairwell, cold, faint lift hum | AMB rain on skylight, steady | FOL coat rustle @0.6, parcel paper crush @2.9 | SFX none | MUS M1 in @1.4 | SIL none
+SND S02 | SPACE MCU, stairwell; TV through the closed door -15, LPF 800 Hz, far-room tail only | RT stairwell, cold, faint lift hum | AMB rain on skylight, steady | FOL coat rustle @0.6, parcel paper crush @2.9 | SFX none | MUS M1 in @1.4 | SIL none
 ```
 
-The Mode H table itself — its columns, the dialogue sheet, the handoff checklist — is owned by [sound-plan-template.md](../assets/sound-plan-template.md). Three notation rules that make either form auditable: every shot gets a room-tone entry even when the entry is "bed continues"; a cell you left blank is a decision you did not take, so write `none`; and deliberate silence is written in as an entry, never as an empty cell.
+The Mode H table itself — its columns, the dialogue sheet, the handoff checklist — is owned by [sound-plan-template.md](../assets/sound-plan-template.md). Four notation rules that make either form auditable: every shot gets a room-tone entry even when the entry is "bed continues"; every shot gets a `SPACE` entry naming the shot size and any source not in the camera's room, written `same room` when there is none; a cell you left blank is a decision you did not take, so write `none`; and deliberate silence is written in as an entry, never as an empty cell.
 
 ### Which layer carries which genre
 
@@ -98,7 +111,7 @@ Duration limits, measured from the last audible element:
 | 1.0–2.0 s | Deliberate and heavy. Works only if the picture is doing something |
 | Over 2.0 s of true digital silence | A technical fault. The audience checks their speakers |
 
-Rule: past 1.0 s, do not hold at true zero. Fall to a room-tone floor roughly 15 dB under the bed's working level instead — about −45 dBFS once the programme is anchored to its delivery target, which is the one genuinely absolute number in this file. The audience still experiences silence; the playback system still sounds alive.
+Rule: past 1.0 s, do not hold at true zero. Fall to a room-tone floor roughly 15 dB under the bed's working level instead — with room tone running at −30, that floor is −45 on the same relative-to-dialogue scale as every other number here, not an absolute dBFS figure. The audience still experiences silence; the playback system still sounds alive.
 
 Placement: put silence **before** the line that matters, not after it. Put it **on the reaction**, not on the action. Worked, on the doorway scene: her last footfall lands at `@4.5`, she breathes out at `@5.8`, and then the bed holds alone for 1.2 s while she does nothing but stand at the door. The silence is the decision; the picture only shows the pause. After an impact, one held beat of quiet is what makes the impact memorable — see the breath pattern in [editing-and-assembly.md](editing-and-assembly.md).
 
@@ -153,7 +166,7 @@ Write away from:
 
 ### The one-speaker-per-clip rule
 
-One speaking face per generated clip. Always.
+One speaking face per generated clip, wherever the surface does not expose synchronized multi-speaker speech — check your target's `Dialogue + lip-sync` cell in the capability matrix of [ai-video-tool-adapters.md](ai-video-tool-adapters.md), which owns that reading, before you assume either way. Absent a confirmed multi-speaker feature, treat the rule as absolute.
 
 Reasons, in order of how often they bite: sync systems bind one voice track to one detected face, so two faces produce either the wrong mouth moving or both mouths moving; a two-hander inside one clip has no cut point, because you cannot control where a cut falls inside a generation; and a second face doubles the identity-drift surface for no gain.
 
@@ -333,7 +346,8 @@ so F15 cannot occur in it.
                only because the picture is doing something: she has stopped moving
                and has not yet decided.
 0:23.5-0:25.0  quiet, 1.5 s - score cut dead, television out of earshot, bed only.
-No true digital silence anywhere. The bed never falls below -45 dBFS.
+No true digital silence anywhere. The bed never falls below -45 relative to dialogue,
+15 dB under its working level.
 
 ### Assembly notes
 - One room-tone region and one ambience region across all three clips. Mute every

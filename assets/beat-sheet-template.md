@@ -11,9 +11,9 @@ Seven rules. A row that breaks any of them is not a beat.
 1. **State in must differ from state out.** If you cannot write two genuinely different phrases, merge the row into its neighbour.
 2. **Every delta names its agent.** Something applied the pressure: the character's own body, another person, an object, an off-screen sound, or a deadline. "The mood shifts" names no agent and is not a beat.
 3. **Camera is not a beat.** "Push in on his face" is a Step 7 decision. A real beat survives being shot three different ways. If the visual-action cell contains a shot size or a camera move, you have written a shot.
-4. **Location change is not a beat.** Walking to the door is a beat only if arriving changes the pressure. Otherwise it is travel and belongs inside a neighbouring beat.
+4. **Location change is not a beat.** Walking to the door is a beat only if arriving changes the pressure. Otherwise it is travel and belongs inside a neighbouring beat. A second location that runs *at the same time* as the first is not travel — it is a second thread, gets its own letter in the Thread column, and its rows are judged by these same seven rules.
 5. **One beat, one turn.** Two turns in one row means two rows.
-6. **Escalation, not business, is what earns a row.** Beats run in story order — you do not reorder them. But if the running tension is flat across three consecutive rows, those three rows are one beat and you have listed activity.
+6. **Escalation, not business, is what earns a row.** Beats run in story order within their thread — you do not reorder them, and where two threads run at once each is ordered on its own while the interleave is an edit decision, not a beat-sheet one. But if the running tension is flat across three consecutive rows, those three rows are one beat and you have listed activity.
 7. **The last beat is what the audience walks out holding.** It is the only beat allowed to release the character while tightening the audience.
 
 Weak row, then the same material as a beat:
@@ -33,13 +33,14 @@ The numbers are only worth writing if they are arithmetic: the running curve mus
 
 ## Beat table
 
-| # | Story function | State in | Δ pressure (agent) | Visual action | State out | Shot family | Sec |
-|---:|---|---|---|---|---|---|---:|
-| 1 |  |  |  |  |  |  |  |
-| 2 |  |  |  |  |  |  |  |
+| # | Thread | Story function | State in | Δ pressure (agent) | Visual action | State out | Shot family | Sec |
+|---:|---|---|---|---|---|---|---|---:|
+| 1 |  |  |  |  |  |  |  |  |
+| 2 |  |  |  |  |  |  |  |  |
 
 Column rules:
 
+- **Thread** — which storyline the beat belongs to. One value for a single-line scene (`main`); `A` and `B` when the scene cross-cuts two actions running at the same time. Threads make parallel action plannable here; how the two are interleaved, and at what rate, is owned by [editing and assembly](../references/editing-and-assembly.md).
 - **Story function** — the job this beat does for the scene, in verb form. Not "sad moment"; "reveal that delivering the letter has a cost".
 - **Visual action** — externally visible behaviour only. No verbs the camera cannot photograph (`realizes`, `remembers`, `feels`). See the verb list in [prompt lexicon](../references/prompt-lexicon.md).
 - **Shot family** — one of the shot-function names owned by [cinematic language](../references/cinematic-language.md): establishing, relation, close-up, insert/detail, reaction, transition, aftermath, point-of-view, reveal. This is a *family*, not a shot; it tells Step 7 what kind of coverage the beat wants. Do not coin names outside that list — Step 7 has to be able to look the word up.
@@ -51,13 +52,13 @@ Project `Under the Door`, scene 7. Target 22s, 16:9, no style lens. A courier de
 
 Visual thesis: the door grows and the courier shrinks until the only thing in frame still holding light is the gap underneath it.
 
-| # | Story function | State in | Δ pressure (agent) | Visual action | State out | Shot family | Sec |
-|---:|---|---|---|---|---|---|---:|
-| 1 | Turn an address into one specific door | Rehearsed, on-task, has not thought past the delivery | +1 (arrival — the abstract errand becomes one specific door) | Climbs the last flight, checks the door against the envelope, takes three steps and stops 60cm short | Located and squared to the door, envelope up at chest | establishing | 4 |
-| 2 | Reveal that delivering has a cost | Located; still believes he is only a messenger | +2 (his own hand — it will not finish the knock) | Right hand rises, knuckles stop 3cm from the wood, hold, then the hand lowers to his thigh | Exposed to himself; the errand has become a decision | reaction | 5 |
-| 3 | Make the person behind the door real | Hesitating in what he assumed was privacy | +2 (off-screen — a chair scrapes, a radio comes up) | A shadow crosses the warm line under the door; his eyes drop from the door face to the gap | Cornered; being present is now the risk | insert/detail | 3 |
-| 4 | He chooses the cowardly delivery | Cornered, out of time | +3 him / +2 us (his own act, and it cannot be undone) | Crouches, feeds the envelope under the door, pushes with two fingers until his fingertips touch wood and the envelope is gone | Committed; hands empty, nothing retrievable | reveal | 6 |
-| 5 | Leave the audience holding what he refused to hold | Released, ashamed | −6 him / +1 us (he is gone; the letter is not) | Stands, backs two steps, turns and drops down the stairs; the empty landing holds until a shadow crosses the light line from inside | Absent | aftermath | 4 |
+| # | Thread | Story function | State in | Δ pressure (agent) | Visual action | State out | Shot family | Sec |
+|---:|---|---|---|---|---|---|---|---:|
+| 1 | main | Turn an address into one specific door | Rehearsed, on-task, has not thought past the delivery | +1 (arrival — the abstract errand becomes one specific door) | Climbs the last flight, checks the door against the envelope, takes three steps and stops 60cm short | Located and squared to the door, envelope up at chest | establishing | 4 |
+| 2 | main | Reveal that delivering has a cost | Located; still believes he is only a messenger | +2 (his own hand — it will not finish the knock) | Right hand rises, knuckles stop 3cm from the wood, hold, then the hand lowers to his thigh | Exposed to himself; the errand has become a decision | reaction | 5 |
+| 3 | main | Make the person behind the door real | Hesitating in what he assumed was privacy | +2 (off-screen — a chair scrapes, a radio comes up) | A shadow crosses the warm line under the door; his eyes drop from the door face to the gap | Cornered; being present is now the risk | insert/detail | 3 |
+| 4 | main | He chooses the cowardly delivery | Cornered, out of time | +3 him / +2 us (his own act, and it cannot be undone) | Crouches, feeds the envelope under the door, pushes with two fingers until his fingertips touch wood and the envelope is gone | Committed; hands empty, nothing retrievable | reveal | 6 |
+| 5 | main | Leave the audience holding what he refused to hold | Released, ashamed | −6 him / +1 us (he is gone; the letter is not) | Stands, backs two steps, turns and drops down the stairs; the empty landing holds until a shadow crosses the light line from inside | Absent | aftermath | 4 |
 
 Running tension — courier: `2 → 3 → 5 → 7 → 10 → 4`. Audience: `2 → 3 → 5 → 7 → 9 → 10`. Both curves are the state-in of B1 followed by each state-out, so every step is the row's Δ; if they do not add up, one of the two is a wish. The largest rise (+3, B4) completes at 82% of scene time, and only the courier comes down. That is the shape you want.
 

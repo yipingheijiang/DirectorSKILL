@@ -21,7 +21,7 @@ Worked examples use project `Under the Door` (`UTD`), scene 7, the five-shot sce
 |---|---|---|---|
 | P1 | 20 | Story function | Every shot names a beat id and the job it does for that beat. A shot whose function is "it looks good" is deleted, not scored |
 | P2 | 15 | Blocking & camera logic | Start, motion, end written for each shot; one dominant move at most; the move is inside the book's move budget and is motivated by what the audience must newly see |
-| P3 | 25 | Keyframe integrity | The tick-box gate at the end of [keyframe prompt template](keyframe-prompt-template.md) passes: invariant strings verbatim, `kf-first` and `kf-last` sharing slots 2, 3, 5, 6, 7, 9, the checkable anchor visible at this shot size, hands visible or deliberately cropped, no rendered text |
+| P3 | 25 | Keyframe integrity | The tick-box gate at the end of [keyframe prompt template](keyframe-prompt-template.md) passes: invariant strings verbatim, `kf-first` and `kf-last` sharing slots 2, 3, 5, 6, 7, 9, the checkable anchor visible at this shot size, hands visible or deliberately cropped, apparent perspective matching the stated focal length, no rendered text |
 | P4 | 20 | Prompt hygiene | The five-question self-check in [video prompt template](video-prompt-template.md) passes on every prompt: one action, one camera move, explicit end state, invariants present, negatives matched to real risk. Clip length sits inside the duration strategy owned by [ai video tool adapters](../references/ai-video-tool-adapters.md) — 3–5s for a face-carrying shot, 3–4s for fine hand work, 8–12s only where no legible face is in frame |
 | P5 | 20 | Continuity setup | End state of shot N equals start state of shot N+1; era, props, and light state declared and consistent; seeds and reference assets recorded in the registry |
 
@@ -41,7 +41,7 @@ under plausible audio, and audio errors hide under picture you have already acce
 | # | Weight | Category | Check | F-codes |
 |---|---|---|---|---|
 | G1 | 25 | Identity & wardrobe | Face, build, hair, the checkable anchor, and every garment hold from the first frame to the last | F1, F16 |
-| G2 | 20 | Action & end state | The requested action happened, once, and the clip ends on the pose you specified | F4, F5 |
+| G2 | 20 | Action & end state | The requested action happened, once, and the clip ends on the pose you specified; the clip is an event, not a still frame drifting under a camera move | F2, F4, F5 |
 | G3 | 20 | Motion, anatomy, physics | Limbs and fingers stay countable; weight, contact, and gravity read correctly; speed matches life | F3, F10, F13, F14 |
 | G4 | 10 | Camera behavior | One move, the one you asked for, at the distance you asked for; no unrequested drift or zoom | F6, F17 |
 | G5 | 15 | Frame integrity | No extra people or objects; nothing that was in frame at the head of the clip has gone missing or come back changed at the tail; no rendered text or watermark; no morphing background | F9, F11, F19 |
@@ -57,7 +57,8 @@ Worked example — `UTD_SC07_SH04_v05_clip.mp4`, the irreversible delivery, gene
 image-to-video from the first frame alone:
 
 ```text
-G1 identity   5/5 × 25 = 25.0   cap, jacket, satchel side, chapped knuckles all hold
+G1 identity   5/5 × 25 = 25.0   narrow jaw, deep-set eyes under the low brow, and the 2 cm
+                                left-eyebrow scar all hold; so does the missing collar button
 G2 action     4/5 × 20 = 16.0   envelope goes under, but the two-finger push starts before
                                 the feed completes, so the end state arrives 14f early
 G3 motion     2/5 × 20 =  8.0   right hand shows a sixth finger from 0:03.6 to 0:04.1
@@ -84,7 +85,7 @@ sequence row.
 
 | # | Weight | Category | Check | F-codes |
 |---|---|---|---|---|
-| Q1 | 25 | Cross-cut continuity | Identity, wardrobe, prop state, and light state hold across every splice; end state of shot N matches start state of N+1 | F1, F7, F19 |
+| Q1 | 25 | Splice continuity | Identity, wardrobe, prop state, and light state hold across every splice; end state of shot N matches start state of N+1 | F1, F7, F19 |
 | Q2 | 20 | Rhythm | ASL matches the scene's subject; no shot outstays its information; the cut has a shape rather than a constant pulse | — |
 | Q3 | 15 | Geography & direction | The 180° line is respected or deliberately broken; eyelines match; direction of travel is consistent | F7, F17 |
 | Q4 | 15 | Look uniformity | One grade pass across all clips; no clip is brighter, warmer, or grainier than its neighbours | F12, F16 |

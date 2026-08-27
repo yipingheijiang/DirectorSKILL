@@ -51,6 +51,7 @@ assets/
   qc-checklist.md                         # Mode J
 evals/
   evals.json                              # Behavior contract
+  run.md                                  # How to run the suite and score a result
 ```
 
 ## The pipeline and mode contracts
@@ -74,11 +75,14 @@ Where two files could reasonably cover the same thing, one owns it and the rest 
 | Identity string spec (word budget, rules, examples) | `references/continuity-bible.md` |
 | Lighting ratios, and the lit-side-to-shadow-side convention | `references/lighting-and-color.md` |
 | The 30° rule and all continuity geometry | `references/cinematic-language.md` |
+| The shot-size ladder (six rungs) | `references/cinematic-language.md` |
 | Clip duration strategy | `references/ai-video-tool-adapters.md` |
 | Generation handles and trim | `references/editing-and-assembly.md` |
 | Retry and attempt economics | `references/production-workflow.md` |
 | Sound layer levels and definitions | `references/sound-and-dialogue.md` |
 | The F-code taxonomy | `references/failure-modes.md` |
+| The motion budget | `references/ai-video-tool-adapters.md` |
+| Prompt wording — verb banks, replacement table, negatives | `references/prompt-lexicon.md` |
 
 Negative prompts name **instances**, never categories, everywhere in the skill. "No modern objects" is unresolvable by a generator and is the documented mechanism behind F8 — name the things instead.
 
@@ -131,7 +135,7 @@ A director style is a coherent lens applied at Step 4, overriding defaults at St
 
 ### Copyright safety
 
-Style modules describe **high-level methods only**. Do not include specific shot descriptions, character names, lines of dialogue, or plot beats from real films, or imagery so particular to one film that it reads as a paraphrase. Test: if a sentence would not apply equally to several works in that director's body of work, it is too specific.
+Style modules describe **high-level methods only**. Do not include specific shot descriptions, character names, lines of dialogue, or plot beats from real films, or imagery so particular to one film that it reads as a paraphrase. Test: if a sentence would not apply equally to several works in that director's body of work, it is too specific. The statement this rule enforces — what the modules do and do not license — is [README.md § Usage rule and disclaimer](README.md#usage-rule-and-disclaimer); it is not a term of `LICENSE`, which is unmodified MIT.
 
 ## How to add a new AI video tool adapter
 
@@ -157,7 +161,7 @@ Tool-specific rules: <dialogue syntax, reference binding, language preference, d
 Typical failure and fix: <the one thing that goes wrong most, and the change that fixes it>.
 ```
 
-Also add a column to the control-surface matrix. **Do not state version numbers, prices, or exact hard limits as fact** — vendors change them constantly. Write in capability classes and hedge ("where supported", "if the UI exposes", "verify against current docs").
+Also add a column to the control-surface matrix — and a row, if the tool exposes a control surface the matrix does not list yet. **Do not state version numbers, prices, or exact hard limits as fact** — vendors change them constantly. Write in capability classes and hedge ("where supported", "if the UI exposes", "verify against current docs").
 
 If the tool changes the pipeline globally (for example, reliable long single-shot generation, which argues for fewer and longer shots), add a line to `SKILL.md` "Intake and defaults".
 
@@ -198,7 +202,7 @@ Do not add a mode that is a stylistic variant of an existing one — adjust the 
 }
 ```
 
-Assertions should be **observable** in the output text (never about hidden reasoning), **specific** ("uses one dominant camera movement" beats "looks cinematic"), and **decoupled** from each other. Four to six per case. Style-overlay cases always include a copyright-safety assertion.
+Assertions should be **observable** in the output text (never about hidden reasoning), **specific** ("uses one dominant camera movement" beats "looks cinematic"), and **decoupled** from each other. Four to six per case. Style-overlay cases always include a copyright-safety assertion. How to run the suite and score a result is documented in `evals/run.md`.
 
 ## Style conventions
 
@@ -216,6 +220,7 @@ Assertions should be **observable** in the output text (never about hidden reaso
 - [ ] New director: registered in all four places + `风格参数` block filled + shared control scene used + new eval case
 - [ ] New tool adapter: block added, matrix column added, no unhedged version/price/limit claims
 - [ ] Pipeline or mode change: `SKILL.md` step numbers still 1..13 and modes still A..J across every file that references them, `README.md` architecture diagram updated, `CHANGELOG.md` Unreleased section updated
+- [ ] Eval suite run per `evals/run.md`, with new or changed cases passing
 - [ ] Every relative link resolves (CI runs lychee offline)
 - [ ] No specific shots, dialogue, characters, or plots from real films
 - [ ] Bilingual README tables stay in sync
@@ -258,7 +263,7 @@ Issues live at <https://github.com/wuwangzhang1216/DirectorSKILL/issues>. Useful
 
 保留前缀，保证任何编号在笔记里都不产生歧义：`S` 仅用于提示词形态，`F` 仅用于失败代码，`P`/`G`/`Q` 是 `assets/qc-checklist.md` 的三道闸，`SH` 是示例中的镜头号，`L` 是成本阶梯的层级。不要让一个字母承担第二套编号。
 
-单一所有者：身份串（`references/continuity-bible.md`）、光比与"亮面比暗面"约定（`references/lighting-and-color.md`）、30 度规则与连贯性几何（`references/cinematic-language.md`）、单条时长策略（`references/ai-video-tool-adapters.md`）、留头留尾（`references/editing-and-assembly.md`）、重试经济学（`references/production-workflow.md`）、声音层级（`references/sound-and-dialogue.md`）、F 代码分类（`references/failure-modes.md`）。其他文件一律给链接，不要复述——复述必然漂移。
+单一所有者：身份串（`references/continuity-bible.md`）、光比与"亮面比暗面"约定（`references/lighting-and-color.md`）、30 度规则、连贯性几何与六级景别阶梯（`references/cinematic-language.md`）、单条时长策略与运动预算（`references/ai-video-tool-adapters.md`）、留头留尾（`references/editing-and-assembly.md`）、重试经济学（`references/production-workflow.md`）、声音层级（`references/sound-and-dialogue.md`）、F 代码分类（`references/failure-modes.md`）、提示词措辞——动词库、替换表、负面词（`references/prompt-lexicon.md`）。其他文件一律给链接，不要复述——复述必然漂移。
 
 负面提示词一律点名**具体物件**，不写类别。"no modern objects" 是生成模型无法解析的类别，也正是 F8 的成因机制——把东西一个个说出来。
 
@@ -273,18 +278,18 @@ Issues live at <https://github.com/wuwangzhang1216/DirectorSKILL/issues>. Useful
 
 ### 版权安全
 
-只描述**高层方法**。不要出现具体镜头、角色名、台词、剧情节拍。判据：如果一句话不能同样适用于该导演的若干部作品，它就太具体了。
+只描述**高层方法**。不要出现具体镜头、角色名、台词、剧情节拍。判据：如果一句话不能同样适用于该导演的若干部作品，它就太具体了。这条规则背后的声明——风格模块授权什么、不授权什么——见 [README.md 的"使用规则与免责声明"](README.md#使用规则与免责声明)；它不是 `LICENSE` 的条款，`LICENSE` 是未经修改的 MIT。
 
 ## 如何添加新的 AI 视频工具适配器
 
-先看现有的能力优先路由是否已覆盖——该文件按控制面和四种提示词形态（S1 纯运动 / S2 全描述 / S3 首尾帧 / S4 多镜头时间戳）组织，没有特殊控制面的工具可能只需在能力矩阵加一列。确实需要独立段落时，按现有格式追加：擅长点、控制面、提示词优先级、模板、工具特定规则、典型失败与修复。
+先看现有的能力优先路由是否已覆盖——该文件按控制面和四种提示词形态（S1 纯运动 / S2 全描述 / S3 首尾帧 / S4 多镜头时间戳）组织，没有特殊控制面的工具可能只需在能力矩阵加一列；若它带来矩阵还没有的控制面，再加一行。确实需要独立段落时，按现有格式追加：擅长点、控制面、提示词优先级、模板、工具特定规则、典型失败与修复。
 
 **不要把版本号、价格、精确上限当作事实写死**——厂商改得很勤。用能力类别描述，并加上"以官方最新文档为准"的限定。图像模型同理，写在 `references/image-model-adapters.md`。
 
 ## 如何添加类型片手册 / 失败代码 / 输出模式
 
 - 类型片：在 `references/genre-playbooks.md` 追加一块，字段集与现有类型完全一致，并在对比表加一行。
-- 失败代码：只增不改，从 F19 起，四个区块齐全（症状、成因排序、按成本阶梯排序的修复、前后提示词对照），并同步到症状索引和 QC 表。
+- 失败代码：只增不改，从 F20 起，四个区块齐全（症状、成因排序、按成本阶梯排序的修复、前后提示词对照），并同步到症状索引和 QC 表。
 - 输出模式：只有在与 A–J 真正不同时才新增 Mode K，并加模板和 eval 用例。已有模式的风格变体请直接改已有模式。
 
 ## 风格规范
@@ -301,6 +306,7 @@ Issues live at <https://github.com/wuwangzhang1216/DirectorSKILL/issues>. Useful
 - [ ] 加导演 = 4 处登记 + `风格参数` 填满 + 使用统一对照场景 + 新 eval 用例
 - [ ] 加工具适配器 = 段落 + 矩阵列 + 无未加限定的版本/价格/上限声明
 - [ ] 改流水线或模式 = 全库步骤号仍是 1..13、模式仍是 A..J，README 架构图与 CHANGELOG 同步
+- [ ] 按 `evals/run.md` 跑过 eval 套件，新增/改动的用例通过
 - [ ] 所有相对链接可解析（CI 跑 lychee offline）
 - [ ] 没有任何具体镜头/台词/角色/剧情出现在风格模块里
 - [ ] 双语 README 表保持一致

@@ -127,7 +127,7 @@ A'                            that character's END position after the move
 ```
 
 - Reads: assessment, seduction, or interrogation. The orbiter is deciding something about the pivot.
-- Camera: beside A at the centre of the arc, panning with B; or locked at 6 o'clock so B crosses frame while A rotates in place. A locked camera goes blind at whichever clock position sits opposite it, and from 6 o'clock that is 12 — B passes dead behind A. Moving to 4 o'clock only shifts the blind spot to 10, still on B's path; for a 9-to-1 arc the positions that never occlude are 10 and 11 o'clock.
+- Camera: beside A at the centre of the arc, panning with B; or locked at 6 o'clock so B crosses frame while A rotates in place. A locked camera goes blind at whichever clock position sits opposite it, and from 6 o'clock that is 12 — B passes dead behind A. Moving to 4 o'clock only shifts the blind spot to 10, still on B's path; for a 9-to-1 arc the only camera positions whose blind spot falls entirely outside it are 2 and 8 o'clock. Do not reach for 10 or 11 instead: their blind spots are clear, but B walks through them, and a camera standing on the mover's path is a collision you have to restage rather than an occlusion you can wait out.
 - AI: low. Orbit is the highest-drift camera move and a pivoting body compounds it. Substitute two static setups shot from the arc's start angle and end angle; the cut does the orbit.
 
 ### 6. The wedge
@@ -139,7 +139,7 @@ A'                            that character's END position after the move
 ```
 
 - Reads: a pair becomes a triangle. Whoever takes the gap has ended the private thing that was happening in it.
-- Camera: frontal, symmetric, 35 mm from ~3 m, wide enough that the gap is visible *before* C claims it. The composition must have a hole in it for the beat to land.
+- Camera: frontal, symmetric, 35 mm from ~3 m, wide enough that the gap is visible *before* C claims it. The composition must have a hole in it for the beat to land. The moment C lands, A–B stops being the only line in the room — pick which axis governs the coverage by the three-or-more-bodies rule in [cinematic-language.md](cinematic-language.md) before you shoot any single.
 - AI: medium. C's arrival is an entrance — start with C's shoulder already at frame edge (see Entrances below) rather than conjuring a whole body.
 
 ### 7. The barrier
@@ -269,7 +269,7 @@ Worked: the same woman leaves the same room, three ways. `Exits frame-right at c
 - The look-then-reveal structure: Shot 1 is the look — a face near a frame edge, eyeline pointed off-frame; Shot 2 is the thing, framed from roughly the looker's height and angle. Cost: two clips. Payoff: the audience builds the geography themselves and the model never has to render two subjects in one frame.
 - False eyeline as tension: point the look off-frame at nothing and either never pay it off, or pay it off somewhere else. Hold the look 1.5–3 s past comfortable. Use once; twice teaches the audience to stop believing you.
 - Height rule: generate the reverse at a camera height matching the looker's eye height, or the two clips will not read as the same room. A seated person's view of a stander is a low angle; render that reverse from standing eye level and the geometry lies — most obviously in interrogation and bedside scenes. Keep the metre value in the shot plan for yourself, but put the *consequence* in the prompt ("the camera sits below his shoulder line and the ceiling is visible behind him"), because models honour visible geometry far more reliably than numbers. Height ladder in [cinematic-language.md](cinematic-language.md).
-- For the axis of action (180-degree rule) and eyeline-match continuity across cuts, see [cinematic-language.md](cinematic-language.md).
+- For the axis of action (180-degree rule) and eyeline-match continuity across cuts, see [cinematic-language.md](cinematic-language.md) — including its rule for three or more bodies, which is what any wedge, ladder or three-way notation line staged here inherits the moment a third body arrives.
 
 Worked, two clips: (1) MCU, a woman at the right edge of frame, eyes pointed off frame-left and slightly down, held 2 s past comfortable, one blink; (2) locked wide from her eye height, angled frame-left, of a kitchen table with two mugs on it and only one of them steaming. Neither clip contains two people, neither asks the model to invent anything, and between them the audience has built a room, a relationship, and an absence.
 

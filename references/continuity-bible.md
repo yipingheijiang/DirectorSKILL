@@ -53,6 +53,8 @@ Count the words when you write it, once. A string that is 28 or 56 is a defect, 
 4. One hair spec — length, cut, and parting or tie-up side.
 5. One wardrobe anchor, last — garment, colour, material, and one detail that can be checked at a distance.
 
+Audit a candidate against the same counts before it is pasted anywhere: 30–50 words · 1–2 demographic · 2–3 structure · exactly 1 landmark · 1 hair · 1 wardrobe anchor, last. An empty slot, a doubled slot, or a slot out of order is a defect, and the landmark slot is the one to check first — at zero, nothing in the string proves drift. Fix it before the string enters a single prompt; after that it propagates by copy, and so does the defect.
+
 Where a tool splits wardrobe into its own prompt slot — the keyframe slot anatomy in [image-model-adapters.md](image-model-adapters.md) does — the face-only portion is the first 15–25 words of this same string and the wardrobe anchor moves to its slot. That is a split of one string, not a second string; do not rewrite either half.
 
 If the target tool takes a Chinese prompt, write one Chinese identity string and freeze it the same way. Translating the English string ad hoc per shot is paraphrase by another route, and it drifts exactly as fast. Craft terms in [prompt-lexicon.md](prompt-lexicon.md).

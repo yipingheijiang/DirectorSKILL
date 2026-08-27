@@ -179,8 +179,8 @@ Abbreviated but real. Beats referenced as `B1`…`B5` come from [beat sheet](bea
 ## Production design anchors and era lock
 - Era: Shanghai lilong（里弄）apartment block, winter 1937
 - Anchors: peeling dark-green wainscot to waist height, mortise knob with a brass
-  escutcheon, worn red floor tile, painted iron stair rail, canvas satchel, padded cotton
-  jacket, a chip in the door's lower-left corner
+  escutcheon, worn red floor tile, painted iron stair rail, wool cap, canvas satchel,
+  padded cotton jacket, a chip in the door's lower-left corner
 - Must avoid: lever handles, plastic, conduit wiring, rubber soles, wristwatch, printed
   logos, glass in the door. AI-specific: the brass number plate stays defocused or
   cropped. Not because text cannot be rendered — several image models handle it well —
@@ -220,9 +220,10 @@ Abbreviated but real. Beats referenced as `B1`…`B5` come from [beat sheet](bea
 Paste these verbatim into every keyframe and video prompt for this scene. World space
 only — the per-shot camera-relative direction is the shot plan's job.
 
-ID_COURIER: a thin 19-year-old male courier, shaved neck, wool cap pushed back off his
-forehead, grey padded cotton jacket buttoned to the throat, canvas satchel strap across
-his chest on the left shoulder, chapped knuckles on the right hand
+ID_COURIER: a 19-year-old Chinese man with a narrow jaw, deep-set eyes under a low
+brow, a 2 cm scar through the left eyebrow, black hair clipped short and shaved high at
+the neck, in a grey padded cotton jacket buttoned to the throat with one bone button
+missing at the collar
 
 LOCK_LANDING: third-floor landing of a 1937 Shanghai lilong apartment block, peeling
 dark-green wainscot to waist height, cracked cream plaster above, worn red floor tile,

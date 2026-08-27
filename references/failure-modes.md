@@ -119,7 +119,7 @@ Two user phrasings need splitting by hand:
 
 ## The cost ladder
 
-Try in order. The ladder is ordered by how much of your work each level throws away, not only by money: L1–L4 all cost at least one generation, but L1 discards a sentence, L4 discards a keyframe, and L5 discards the plan. Most people jump to L3 (regenerate and hope) when L1 would have fixed it, and stay at L3 when L5 was the only real answer.
+Try in order. The ladder is ordered by how much of your work each level throws away, not only by money: L1–L4 all cost at least one generation, but L1 discards a sentence, L4 discards a keyframe, L4.5 discards nothing but the delivered clip's surface, and L5 discards the plan. Most people jump to L3 (regenerate and hope) when L1 would have fixed it, and stay at L3 when L5 was the only real answer.
 
 | Level | Move | Real cost | Usually fixes |
 |---|---|---|---|
@@ -127,6 +127,7 @@ Try in order. The ladder is ordered by how much of your work each level throws a
 | L2 | Parameter change, where the tool exposes them: duration down, motion strength down, prompt-adherence up, seed locked, frame rate | ~1 min, then 1 generation | F1, F3, F6, F13, F19 |
 | L3 | Regenerate unchanged (seed roulette) | 1 generation per pull, budget 2 | F10, F9, F3 when intermittent |
 | L4 | Rebuild the keyframe | 1 image generation + 1 video generation | F1, F8, F11, F12, F16, F17 |
+| L4.5 | Video-to-video edit pass on the delivered clip: relight, regrade, reframe | 1 generation, and the approved take survives | F12, F16, F17, framing-only F9 |
 | L5 | Re-plan the shot: shorter, closer, simpler, split | ~10 min of planning, then 1–2 generations; saves 5+ | F14, F15, F19, sustained F10, anything irreducible |
 | L6 | Fix in the edit: trim, cutaway, dissolve, retime, mask | no generation, costs 0.3–1.0 s of screen time | F13, F18, F5, late-onset F3 |
 | L7 | Cut the shot | no generation, costs a beat — verify the beat survives elsewhere | Any code, once this one shot has eaten more than roughly 8% of the project's planned generation budget |
@@ -135,12 +136,13 @@ Rules that make the ladder work:
 
 - L3 economics: if two consecutive unchanged pulls fail the *same* way, the failure is deterministic. Stop pulling. A third pull is superstition. If they fail *differently*, one more pull is rational. That budget of two applies to serial re-rolls after a diagnosis, where each pull is buying information. A parallel batch of four identical takes on a Green shot is sampling rather than roulette, and is governed by the band budgets in [production-workflow.md](production-workflow.md), which owns retry economics; the only rule it must obey is that you do not batch a shot whose keyframe or prompt you already suspect.
 - Skip straight to L5 when any of these is true: (a) the shot needs something on the irreducible list; (b) triage returns two or more codes; (c) the action requires more than ~1.5 s of continuous precise contact between hands and an object, or between two people; (d) the clip is longer than 8 s and the failure onset is after second 5; (e) you have already spent three generations.
+- L4.5 has a precondition no other rung has: a take that is right apart from its surface. It re-renders the clip you already have, so it inherits that clip's blocking and timing and cannot fix an action, an end state, or an angle — only how the frame is lit, graded, styled or cropped. When that is the whole defect it pre-empts L4: one generation instead of two, and the performance survives. Whether the tool exposes a video-to-video pass at all is a capability question, owned by [ai-video-tool-adapters.md](ai-video-tool-adapters.md).
 - L6 is not defeat. A 0.5 s trim that lands the cut before the melt is a better use of the clip than a fourth generation. See [editing-and-assembly.md](editing-and-assembly.md) for what the cut can absorb. The ladder governs the decision to spend *another generation*; once a clip is in hand and its defect is localized — inside the trim handles, under 8 frames, or a grade mismatch against its neighbour — go straight to L6. That triage is owned by editing-and-assembly.md and outranks the ladder's ordering.
 - Every number on this ladder — the two pulls at L3, the three generations in the skip rule, the 8% at L7 — is a threshold you set in advance so the decision is not made while you are frustrated. They are planning guidance, not measured success rates.
 
 ## The three-strike rule
 
-After three failed generations of the same shot *design*, **change the shot, not the prompt**. The fourth prompt edit is almost always a re-wording of the second. Pick one of these seven moves — pick exactly one, and regenerate once. The count resets when the design changes; the per-shot ceilings across all designs are the band budgets in [production-workflow.md](production-workflow.md).
+After three failed generations of the same shot *design*, **change the shot, not the prompt**. The fourth prompt edit is almost always a re-wording of the second. Pick one of these seven moves — pick exactly one, and regenerate once. The count resets when the design changes; the per-shot ceilings across all designs are the band budgets in [production-workflow.md](production-workflow.md). An L4.5 pass does not add a strike, because it edits a delivered take instead of re-rolling the design — a shot at three strikes whose only remaining defect is light, grade or frame still has that rung.
 
 | Move | Do this | Use when |
 |---|---|---|
@@ -351,6 +353,7 @@ AFTER   Night street, 1930s Shanghai. Light comes only from gas lamps, paper lan
 - Fix L1: state the count explicitly — "exactly one person in frame, no one enters frame".
 - Fix L3: intermittent duplication often clears on one more pull.
 - Fix L4: rebuild the keyframe with a near, occluding background — a wall, a curtain, a shallow-focus wash — so there is no readable depth to populate.
+- Fix L4.5: where the intruder sits at the frame edge and the take is otherwise right, a v2v reframe crops it out without re-rolling the shot.
 - Fix L5: tighten the frame so there is no room for a second body.
 
 ```text
@@ -398,6 +401,7 @@ AFTER   Close-up of a folded newspaper on the table, headline block out of focus
 - Fix L1: name the source, its side, its quality, and forbid change — "direct sun through the window camera-left, hard-edged shadows, right side of the face stays in shadow throughout". Name the quality that the source actually produces: an undressed window is a large soft source, so "hard window light" only makes sense as direct sun or a narrow slot. Ratios and motivation live in [lighting-and-color.md](lighting-and-color.md).
 - Fix L2: shorten; drift is cumulative.
 - Fix L4: rebuild the keyframe with unmistakable directional light — a visible practical in frame anchors the model far better than a described one.
+- Fix L4.5: a v2v relight pass on the delivered clip imposes one key side and one colour temperature across its whole length; take it before L4 whenever the blocking and the performance are already right.
 - Fix L6: stabilize small drift with a grade in the edit before regenerating.
 
 ```text
@@ -461,6 +465,7 @@ AFTER   Medium close-up, he is turned three-quarters away, mouth not visible. Hi
 - Cause 3: a style lens was applied in planning but never translated into prompt-level mechanics.
 - Fix L1: convert the style into measurable mechanics — focal length, depth of field, palette by name, contrast level, grain, key quality. Mechanics reproduce; moods do not.
 - Fix L4: regenerate keyframes from one seed and one reference image so the film shares a source look.
+- Fix L4.5: a v2v regrade or restyle pass pulls the delivered clip onto the film's look without regenerating the take under it.
 - Fix L6: unify in the grade. A consistent LUT across shots hides more drift than any prompt.
 
 ```text
@@ -477,6 +482,7 @@ AFTER   40 mm lens look at a wide stop: the subject sharp, the background soft b
 - Fix L1: state framing in frame-relative terms — "eyes on the upper third line, headroom about 10% of frame height, subject on the left third, hands inside frame". Headroom scales with size: roughly 10% of frame height on a medium or MCU, closer to 5% on a full-figure wide, near zero on a close-up where you are cropping the top of the head deliberately.
 - Fix L2: set the output aspect to the delivery aspect where the tool exposes it, before spending a generation.
 - Fix L4: rebuild the keyframe at the delivery aspect and the intended size, and let the video model inherit it. Never crop a 16:9 keyframe into 9:16 and expect the composition to survive.
+- Fix L4.5: a v2v reframe pass to the delivery aspect, where the framing is the only error — it re-renders picture outside the crop instead of spending the resolution you have.
 - Fix L6: reframe in the edit only if you have resolution to spare.
 
 ```text

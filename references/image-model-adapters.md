@@ -2,7 +2,7 @@
 
 Load this file when the task produces stills — keyframes（关键帧）, storyboard panels, first/last-frame pairs（首尾帧）, character or location reference sheets — or when generated stills drift in face, wardrobe, set, or light. This is Step 8 (Keyframe strategy) of the pipeline and the engine behind Mode E, whose emittable form is [keyframe-prompt-template.md](../assets/keyframe-prompt-template.md).
 
-**Staleness warning, before anything else.** The control-surface matrix in §2 describes capability *classes as of writing*, not a live feature list. Vendors ship, rename, and remove controls constantly, a family's base model and its editing model behave nothing alike, and the same model exposes different knobs in a web UI, an app, and an API. Nothing in that table is a fact you can quote to a client — verify against current documentation before you promise a user a control.
+**Staleness warning, before anything else.** The control-surface matrix in §2 describes capability *classes as of writing*, not a live feature list. Vendors ship, rename, and remove controls constantly, a family's base model and its editing model behave nothing alike, and the same model exposes different knobs in a web UI, an app, and an API. Nothing in that table is a fact you can quote to a client — verify against current documentation before you promise a user a control. **Capability snapshot: 2026-08.** Anything older than about two release cycles is a prior, not a fact — confirm on the panel before you rely on it.
 
 ## 1. The keyframe is the control point
 
@@ -16,21 +16,21 @@ This matrix describes **capability classes as of writing, not a live feature lis
 
 Legend, one grade finer than the video matrix in [ai-video-tool-adapters.md](ai-video-tool-adapters.md): `best` first-class and precise, `yes` present and workable, `part` partial, indirect, or setup-dependent, `no` absent or unreliable on the surfaces we looked at — read it as "check", not as "impossible" — and `varies` where surface, tier, and release differ often enough that only the docs can answer.
 
-| Control surface | MJ | Flux | NanoBanana / Gemini-image | Seedream / 即梦 | Qwen-Image | SDXL + ControlNet | Ideogram | Recraft |
-|---|---|---|---|---|---|---|---|---|
-| Text prompt fidelity (literal adherence) | part | best | best | yes | best | part | yes | yes |
-| Image reference / img2img（图生图）with strength dial | yes | best | yes | best | yes | best | yes | yes |
-| Character reference (identity binding) | yes | part | best | yes | part | best | part | varies |
-| Style reference | best | yes | part | yes | part | best | yes | best |
-| Inpainting, masked region（局部重绘） | yes | best | part | best | yes | best | yes | yes |
-| Outpainting / extend canvas | yes | best | part | yes | part | best | yes | yes |
-| Instruction editing ("change only X") | part | best | best | yes | best | part | part | part |
-| Multi-image composition (2+ inputs fused) | part | yes | best | yes | yes | yes | varies | varies |
-| Aspect ratio parameter | best | best | part | best | best | best | best | best |
-| Seed control (reproducible) | part | best | varies | yes | best | best | yes | part |
-| Negative prompt | yes | part | varies | yes | yes | best | yes | part |
-| Text rendering inside the image | part | yes | yes | yes | best | no | best | best |
-| Upscale / detail pass | best | yes | part | yes | part | best | yes | yes |
+| Control surface | MJ | Flux | NanoBanana / Gemini-image | Seedream / 即梦 | Qwen-Image | SDXL + ControlNet | Ideogram | Recraft | Chat-surfaced |
+|---|---|---|---|---|---|---|---|---|---|
+| Text prompt fidelity (literal adherence) | part | best | best | yes | best | part | yes | yes | yes |
+| Image reference / img2img（图生图）with strength dial | yes | best | yes | best | yes | best | yes | yes | part |
+| Character reference (identity binding) | yes | part | best | yes | part | best | part | varies | part |
+| Style reference | best | yes | part | yes | part | best | yes | best | part |
+| Inpainting, masked region（局部重绘） | yes | best | part | best | yes | best | yes | yes | varies |
+| Outpainting / extend canvas | yes | best | part | yes | part | best | yes | yes | part |
+| Instruction editing ("change only X") | part | best | best | yes | best | part | part | part | yes |
+| Multi-image composition (2+ inputs fused) | part | yes | best | yes | yes | yes | varies | varies | yes |
+| Aspect ratio parameter | best | best | part | best | best | best | best | best | part |
+| Seed control (reproducible) | part | best | varies | yes | best | best | yes | part | no |
+| Negative prompt | yes | part | varies | yes | yes | best | yes | part | no |
+| Text rendering inside the image | part | yes | yes | yes | best | no | best | best | varies |
+| Upscale / detail pass | best | yes | part | yes | part | best | yes | yes | part |
 
 Routing rules that fall out of the matrix:
 
@@ -39,6 +39,29 @@ Routing rules that fall out of the matrix:
 - Need reproducibility for A/B testing one prompt word: you need `best` seed. Conversational/chat-surfaced models generally do not give you this; accept it and A/B with reference images instead.
 - Need on-screen signage, a period newspaper, a Chinese title card: Ideogram, Recraft, or Qwen-Image. Do not fight a model that cannot spell.
 - On some models — fast and distilled variants especially — negatives have no visible effect at all. If yours seem to be doing nothing, test it on one frame and assume they are doing nothing until proven otherwise; then move the exclusion into a positive statement ("bare plaster wall, nothing mounted on it" instead of "no posters"). Vocabulary for both directions lives in [prompt-lexicon.md](prompt-lexicon.md).
+- The `Chat-surfaced` column is a class, not a product: any image model you reach through a conversational assistant behaves this way. Instruction editing is its native mode and the numeric surfaces are generally absent — assume nothing to seed and nothing to negate until the surface proves otherwise, and the ratio asked for in words rather than set, so check the delivery ratio on every output. Keep it for edits you can judge by eye.
+
+### Three families, in the same shape as the video blocks
+
+Short blocks for the three classes that carry most stills work in this pipeline, written in the shape the per-tool blocks in [ai-video-tool-adapters.md](ai-video-tool-adapters.md) use. Same caveat as the matrix, and the same decoupling that file states once: each heading names a capability class, and the product carrying it can be renamed, retiered, or withdrawn — confirm it is still offered on the surface the user has before you plan around it, and if it is gone, find whichever product now exposes the same surfaces and read the block against that.
+
+#### Midjourney family
+
+- Surfaces to exploit — `--ar` for the delivery ratio, `--sref` for a look carried across a scene, `--cref` and its weight for a face carried across shots, `--no` for exclusions, and a style-strength control. Parameters, not adjectives.
+- Rules — set the ratio with `--ar` and generate native; never crop into the delivery ratio (§8). One `--sref` per scene, pinned early and reused verbatim, or the look re-rolls shot to shot. `--cref` binds a face *family*, which is why the matrix reads `yes` and not `best` — it does not retire the identity string in slot 3 or its checkable landmark. Exclusions go in `--no` as instances, never categories, and the positive prompt stays free of the word "no". Prompt fidelity is `part` here: a long literal slot list gets averaged, so spend words on slots 2–4 and let the flags carry the look.
+- Typical failure and fix — the look is beautiful and the shot is wrong; the frame ignores the size, angle, and lens you stated. Fix: cut the prompt back to the slots that decide geometry, move the look onto `--sref`, and stop paying for it in words.
+
+#### NanoBanana / Gemini-image class
+
+- Surfaces to exploit — instruction editing on an uploaded image, multi-image composition, character reference. The highest-leverage column in the matrix for film work.
+- Rules — phrase every edit as hold-plus-change with the holds named (§4); this is the class §6 assumes when it says derive the last frame rather than write it. Aspect is `part`: the output tends to inherit the input image's shape, so the delivery ratio is decided in the file you upload, not in a parameter. Seed is `varies`, so do not run single-word A/B tests here — A/B with reference images instead. Chain at most 2–3 edits from one master.
+- Typical failure and fix — it re-generated instead of editing, background objects shifted, and you no longer have a pair. Fix: flip between the two files to catch it, restate the holds as a list of nameable objects rather than "same everything", and go back to the master instead of editing the edit.
+
+#### Seedream / 即梦 class
+
+- Surfaces to exploit — 图生图 with a strength dial, 局部重绘, reference images, 负向提示, seed, and stills for the 首尾帧 path on the video side.
+- Rules — write the whole prompt in Chinese, craft terms included; the culturally specific nouns in [prompt-lexicon.md](prompt-lexicon.md) are the reason this class beats an English-first model on period-Chinese subject matter, and they only resolve in Chinese. Check which way the strength dial points before trusting a number (§6). Exclusions go in 负向提示 as a comma-separated list; keep 不 and 没有 out of the positive prompt.
+- Typical failure and fix — the costume is right and the room came back contemporary. Fix: name three period objects and one period light source as positive facts instead of banning a category — F8 in [failure-modes.md](failure-modes.md).
 
 ## 3. Keyframe prompt anatomy: nine slots, then constraints
 

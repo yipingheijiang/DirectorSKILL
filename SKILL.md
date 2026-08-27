@@ -1,10 +1,21 @@
 ---
 name: cinematic-director
 # Keep the description specific so the host agent loads this skill only for film/video direction tasks.
-description: Acts as a director and previs supervisor for film, video, and AI filmmaking. Converts scripts, prose, story ideas, briefs, or existing image/video assets into executable production deliverables: script and subtext breakdown, beat sheet, director's book, blocking and staging, shot list with coverage, keyframe/storyboard prompts, image-to-video motion prompts, sound and dialogue plans, edit and assembly timelines, continuity bibles, and QC repair notes. Includes per-genre playbooks, a controlled prompt lexicon, a coded failure-diagnosis manual, and capability-first adapters for video models (Runway, Veo, Kling, Luma, Sora-class, Hailuo, Pika, Vidu, 即梦/Dreamina/Seedance, 万相) and image models (Midjourney, Flux, Nano Banana, Seedream, Qwen-Image, SDXL). Optionally applies one named director's style lens (Spielberg, Hitchcock, Kubrick, Kurosawa, Scorsese, Fellini, Bergman, Tarkovsky, Wong Kar-wai, Nolan, Villeneuve, Fincher, Refn, Bi Gan, Zhang Yimou, Hou Hsiao-hsien, Park Chan-wook, Malick, Michael Mann, Coen Brothers) from references/director_styles/ to override camera, lens, lighting, palette, editing, sound, and prompt defaults. Use for shot planning, blocking, staging, camera movement, visual continuity, storyboard and keyframe design, prompt repair, "in the style of X" direction, and any AI video workflow.
+description: >-
+  Acts as a director and previs supervisor for film, video, and AI filmmaking. Turns scripts, prose,
+  briefs, or existing image and video assets into production deliverables — subtext breakdown, beat
+  sheet, director's book, blocking and staging, shot list with coverage, keyframe and storyboard
+  prompts, image-to-video motion prompts, sound and dialogue plans, edit timelines, continuity bibles,
+  and QC repair notes. Carries genre playbooks, a controlled prompt lexicon, a coded failure-diagnosis
+  manual, and capability-first adapters for current video and image models. Optionally applies one
+  named director's style lens — Spielberg, Hitchcock, Kubrick, Kurosawa, Scorsese, Fellini, Bergman,
+  Tarkovsky, Wong Kar-wai, Nolan, Villeneuve, Fincher, Refn, Bi Gan, Zhang Yimou, Hou Hsiao-hsien,
+  Park Chan-wook, Malick, Michael Mann, Coen Brothers. Use for shot planning, blocking, staging,
+  camera movement, visual continuity, storyboard and keyframe design, prompt repair, "in the style of
+  X" direction, and any AI video workflow.
 license: MIT
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
   author: "wangzhang-wu"
 ---
 
@@ -25,22 +36,24 @@ The enemy is adjective soup. `cinematic, dramatic, masterpiece, 8K` tells a mode
 ## Non-goals
 
 - Do not write film criticism unless asked for critique.
-- Do not generate shot variety for its own sake. Every shot answers: what does the audience now understand or feel that they could not one second ago?
-- Do not overload one AI video prompt with unrelated actions.
-- Do not reinvent identity, costume, era, or location when the user has supplied reference assets.
 - Do not reproduce specific shots, dialogue, characters, or plot beats from real films. Style modules teach methods.
+
+Three more non-goals are stated once, as hard rules, so they have a single home: shot variety for its own sake (rule 1), overloading one clip (rule 3), and reinventing what a supplied reference already fixed (rule 6 and the Gotchas).
 
 ## Routing — pick the mode, then load only what you need
 
 `SKILL.md` alone is enough for a short answer. Load reference files on demand, and only the ones the request actually needs. Reading everything wastes context and dilutes the answer.
+
+Load *parts* of files, not whole files. The four largest references — `failure-modes.md`, `genre-playbooks.md`, `ai-video-tool-adapters.md`, `prompt-lexicon.md` — are each an index plus independent sections, and a request almost always needs one section. Read the index, read the one section, stop. The rows below say so where it matters most.
 
 | The user asks for | Mode | Load |
 |---|---|---|
 | "What is this scene really about?" / interpretation | A | — |
 | Beats, structure, "break this into beats" | B | `assets/beat-sheet-template.md` |
 | Visual treatment, director's book, "set the rules" | C | `assets/director-book-template.md`, `references/lighting-and-color.md`, `references/genre-playbooks.md` |
-| Shot list, storyboard plan, shooting table | D | `assets/shot-plan-template.md`, `references/cinematic-language.md`, `references/blocking-and-staging.md` |
-| Image/keyframe/storyboard-panel prompts | E | `assets/keyframe-prompt-template.md`, `references/image-model-adapters.md` |
+| Staging, blocking, "where do they stand", "block this two-hander" | D | `references/blocking-and-staging.md`, `assets/shot-plan-template.md` |
+| Shot list, storyboard plan, shooting table | D | `assets/shot-plan-template.md`, `references/cinematic-language.md`, `references/blocking-and-staging.md`, `references/production-workflow.md` — the last for the difficulty rubric the Risk column is required to read off |
+| Image/keyframe/storyboard-panel prompts | E | `assets/keyframe-prompt-template.md`, `references/image-model-adapters.md`, `assets/qc-checklist.md` — Gate 1 is a hard gate on this step |
 | Video motion prompts from existing images | F | `assets/video-prompt-template.md`, `references/prompt-lexicon.md`, `references/ai-video-tool-adapters.md` |
 | Recurring characters/locations across shots | G | `references/continuity-bible.md` |
 | Sound design, music, dialogue, voice-over | H | `assets/sound-plan-template.md`, `references/sound-and-dialogue.md` |
@@ -50,15 +63,16 @@ The enemy is adjective soup. `cinematic, dramatic, masterpiece, 8K` tells a mode
 | "Score this / gate this batch / how do I report a failure" | J | `assets/qc-checklist.md` |
 | "Direct this" / "everything I need" / full production pass | A–J | run the pipeline in order, loading per step |
 | "In the style of \<director\>" | any | `references/director_styles/NN_<slug>.md` (exactly one) |
-| Names a specific model or platform | any | `references/ai-video-tool-adapters.md` or `references/image-model-adapters.md` |
-| Horror / comedy / commercial / vertical / any genre framing | any | `references/genre-playbooks.md` |
+| "Which lens should I use?" / "how do X and Y differ?" | any | `references/director_styles/example_comparisons.md` — the picker table and the difference matrix |
+| Names a specific model or platform | any | `references/ai-video-tool-adapters.md` or `references/image-model-adapters.md` — read the control-surface matrix and that one family block, then stop |
+| Horror / comedy / commercial / vertical / any genre framing | any | `references/genre-playbooks.md` — read `How to use a playbook` and the one genre named, then stop |
 | Product, packshot, cosmetics, food, macro | any | `references/product-and-macro.md` |
-| Word-level prompt help, negatives, EN↔中文 terms | any | `references/prompt-lexicon.md` |
+| Word-level prompt help, negatives, EN↔中文 terms | any | `references/prompt-lexicon.md` — read the conversion procedure and the one bank or table you need, then stop |
 | Scheduling, retries, versioning, handoff, "how do I run this" | any | `references/production-workflow.md` |
 
-Modes combine, and Mode J is rarely terminal: a repair that lands on re-planning the shot produces new shots, so chain J→F for the prompts, →I for the cut, and →G once more than two shots share invariants.
+Modes combine, but chaining is opt-in, not automatic. Mode J is rarely terminal *in principle* — a repair that lands on re-planning the shot produces new shots, which want F for the prompts, I for the cut, and G once more than two shots share invariants. Chain only when the user asked for the downstream artifact, or when the fix is unusable without it. Otherwise stop at the diagnosis and offer the chain in one line. The response-size table below outranks this row.
 
-A full production pass runs the steps in order, with modes attached where they produce a deliverable: 1 intake · 2 breakdown (A) · 3 beats (B) · 4 lens · 5 book (C) · 6 blocking · 7 shots (D) · 8 keyframes (E) · 9 adapter · 10 prompts (F) · 11 sound (H) · 12 edit (I) · 13 QC (J), with G running underneath. Steps 4 and 9 carry no mode letter and are the two most commonly skipped — do not skip them.
+A full production pass runs the steps in order, with modes attached where they produce a deliverable: 1 intake · 2 breakdown (A) · 3 beats (B) · 4 lens · 5 book (C) · 6 blocking · 7 shots (D) · 8 keyframes (E) · 9 adapter · 10 prompts (F) · 11 sound (H) · 12 edit (I) · 13 QC (J), with G running underneath. Steps 1, 4, 6 and 9 carry no mode letter, and 4, 6 and 9 are the most commonly skipped — do not skip them.
 
 ### Response size
 
@@ -99,7 +113,8 @@ assets:
 constraints:
   era: e.g. Republican-era China, modern Toronto
   must_keep: identity, costume, lighting, setting, props, palette
-  must_avoid: modern objects, text, watermark, extra characters, face change
+  must_avoid: named instances only — no plastic, no printed logos, no rubber soles, no wristwatch,
+              no text, no watermark, no extra people, no face change
 output:
   deliverables: [A..J]
   language: match the user's language
@@ -120,7 +135,7 @@ Defaults when unspecified:
 
 1. **Story function first.** A shot with no story function is deleted, not improved.
 2. **Blocking before framing.** Decide what bodies do in space, then place the camera. A well-blocked scene reads even shot flat.
-3. **One dominant camera move per clip.** None is a legitimate choice and often the better one.
+3. **One dominant camera move and one primary action per clip.** No move at all is a legitimate choice and often the better one. Unrelated actions stacked into one clip is the same defect from the other side — the motion budget is owned by `references/ai-video-tool-adapters.md`.
 4. **Every action has an end state.** "He turns" is not a shot. "He turns until his profile is against the window, then stops" is.
 5. **Behavior, not emotion.** Never prompt "he is afraid." Prompt what fear looks like on a body.
 6. **Continuity is engineered.** Name the invariants — identity, wardrobe, light direction, era, geography — and repeat them verbatim across every prompt in a scene.
@@ -163,7 +178,9 @@ For non-narrative formats, beats are the format's structural blocks — hook, de
 
 If the user names a director or says "in the style of X," load exactly one file from `references/director_styles/` and treat its `风格参数 / Style parameters` YAML as the override set for Steps 5, 7, 8, and 10. Step 8 matters most: the still is where a style is actually fixed, and a lens applied to the shot list but not to the keyframe will not survive generation.
 
-Available: `spielberg`, `hitchcock`, `kubrick`, `kurosawa`, `scorsese`, `fellini`, `bergman`, `tarkovsky`, `wong_kar_wai`, `nolan`, `villeneuve`, `fincher`, `refn`, `bi_gan`, `zhang_yimou`, `hou_hsiao_hsien`, `park_chan_wook`, `malick`, `michael_mann`, `coen_brothers`. Index and how to add more: `references/director_styles/README.md`.
+Available: `spielberg`, `hitchcock`, `kubrick`, `kurosawa`, `scorsese`, `fellini`, `bergman`, `tarkovsky`, `wong_kar_wai`, `nolan`, `villeneuve`, `fincher`, `refn`, `bi_gan`, `zhang_yimou`, `hou_hsiao_hsien`, `park_chan_wook`, `malick`, `michael_mann`, `coen_brothers`. Index and how to add more: `references/director_styles/README.md`. Choosing between candidates, or explaining how two lenses differ: `references/director_styles/example_comparisons.md`, which directs one shared control scene through every lens.
+
+**If the named director has no module, do not silently substitute one.** Say in one line that there is no module for them, name the nearest module and the axis on which it differs, then build an ad-hoc lens: fill the same `风格参数` key set from the user's own reference images or description, and mark it as ad-hoc so later steps know it was not vetted. Silent substitution is worse than no lens, because the user cannot tell it happened.
 
 Precedence: **director lens > genre playbook > project tone > skill defaults.** If the user names two directors, pick the one that better serves the scene's dramatic core, say so in one line, and note what the other would have changed. If none is named, skip this step and let genre and tone set defaults at Step 5.
 
@@ -173,7 +190,7 @@ Style modules describe high-level methods. Never copy specific shots, lines, cha
 
 The reusable rule set that stabilizes every later prompt: tone and genre, lens and framing policy, camera grammar and the allowed move set, lighting logic and key direction, palette and color script, production design and era lock, performance register, editing rhythm and target ASL, sound direction, and the **invariant clauses** — the identity strings and lighting invariant that get pasted verbatim into every prompt.
 
-Template: `assets/director-book-template.md`. Depth: `references/lighting-and-color.md`, `references/genre-playbooks.md`.
+Template: `assets/director-book-template.md`. Depth: `references/lighting-and-color.md`, `references/genre-playbooks.md`, and `references/continuity-bible.md` — the identity string is written *here*, at this step, and that file owns its recipe and its word budget. Writing one without the recipe is how a string ends up with no face geometry in it.
 
 A director's book entry is only done when two different people filling in shots from it would produce compatible work.
 
@@ -187,7 +204,9 @@ Depth: `references/blocking-and-staging.md` — staging geometries, proxemics, b
 
 Build rows only after beats and blocking are clear. Each shot: number, duration, scene/location, story function, shot size, lens, angle, camera movement, blocking as start → motion → end, light direction and atmosphere, continuity anchors, transition, risk, AI generation note.
 
-Template: `assets/shot-plan-template.md`. Grammar: `references/cinematic-language.md` — including the continuity geometry (axis of action, screen direction, eyeline match, the 30° rule) that a video model cannot infer on its own and must be encoded into keyframes.
+Template: `assets/shot-plan-template.md`. Grammar: `references/cinematic-language.md` — including the continuity geometry (axis of action, screen direction, eyeline match, the 30° rule) that a video model cannot infer on its own and must be encoded into keyframes. Risk values are read off the difficulty rubric in `references/production-workflow.md`; do not invent a second scale.
+
+If a style lens is active, its `风格参数` block sets `lens_kit_mm`, `camera`, `shot_size_bias`, `composition` and `editing` for every row here. Apply it now, not later — a lens that only reaches the prompts arrives after the shot has already been decided.
 
 ### 8. Keyframe strategy
 
@@ -199,6 +218,8 @@ Choose by continuity risk:
 - **Storyboard panels** — when the model treats stills as slides. Every panel must imply a motion beginning, a motion just completed, a reveal, a power relationship, or a clue.
 
 Template: `assets/keyframe-prompt-template.md`. Consistency techniques (identity strings, character sheets, location plates, reference binding, building last frames from first frames): `references/image-model-adapters.md`.
+
+If a style lens is active, this is the step where it is actually fixed. Start from that module's `Keyframe / still prompt` template rather than the generic one, apply its `lighting`, `palette`, `composition` and `aspect_bias`, and append its `negative_prompt_adds`. A lens applied to the shot list but not to the keyframe does not survive generation.
 
 Gate: do not generate video from a keyframe that has not passed the pre-generation checks in `assets/qc-checklist.md`.
 
@@ -239,11 +260,19 @@ Avoid [failure modes matching this shot's risk].
 
 ```text
 Overall: [theme, tone, character and setting continuity rules]
-[00:00-00:03] Shot 1: [size/angle]. [action]. Camera [move]. [emotion]. [sound]
-[00:03-00:06] Shot 2: [size/angle]. [action]. Camera [move]. [emotion]. [sound]
+[00:00-00:03] Shot 1: [size/angle]. [action]. Camera [move]. [light or sound cue]
+[00:03-00:06] Shot 2: [size/angle]. [action]. Camera [move]. [light or sound cue]
 ```
 
+Per-segment lines carry action, camera, and at most one light or sound cue. Identity, wardrobe,
+palette and lighting facts live in the `Overall:` block and are never restated in a segment — one
+re-description and the model recasts the character. No emotion word goes in a segment either: hard
+rule 5 applies inside S4 exactly as it does everywhere else, and an emotion adjective here is the
+fastest way to get a generic performance in every segment at once.
+
 Templates: `assets/video-prompt-template.md`. Word-level craft, verb banks, the replacement table, negative-prompt library by failure class, and EN↔中文 terms: `references/prompt-lexicon.md`.
+
+If a style lens is active, take its `camera`, `ai_video` and `negative_prompt_adds` values as the defaults for every prompt written here, and use its `Video / motion prompt` template as the shape.
 
 ### 11. Sound and dialogue plan
 
@@ -381,7 +410,9 @@ The good version names a camera behavior and forbids the rest, gives one primary
 - Is there exactly one dominant camera move per clip — or a deliberate none?
 - Does every action have a start state and an end state?
 - Are the invariants written verbatim, identically, in every prompt of the scene?
-- Do adjacent shots differ by at least two size steps, unless matched on purpose?
+- Do adjacent shots clear the cut geometry — two size steps on an unchanged axis, or one step plus a
+  30°+ angle change — unless the match is deliberate? Rungs and the rule: `references/cinematic-language.md`.
 - Are the negatives limited to this shot's real risks?
 - If a style lens was named, would a reader be able to tell which one from the output alone?
+- Does the output stay clear of any specific shot, line, character, or plot beat from a real film?
 - Is the output proportional to what was asked?

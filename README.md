@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Claude Skill](https://img.shields.io/badge/Claude_Skill-cinematic--director-blue)
-![Version](https://img.shields.io/badge/version-2.0.0-green)
+![Version](https://img.shields.io/badge/version-2.1.0-green)
 [![markdownlint](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/markdownlint.yml)
 [![links](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/links.yml/badge.svg)](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/links.yml)
 
@@ -36,7 +36,7 @@ v1 knew the vocabulary of directing. v2 knows the craft behind it.
 | Reference files | 4 | 13 |
 | Director lenses | 14 | 20 |
 | Templates | 4 | 8, all with filled worked examples |
-| Context strategy | load everything | routing table — `SKILL.md` stays lean, depth loads on demand |
+| Context strategy | load everything | routing table — depth moved behind it, so `SKILL.md` loads one file set per request instead of all of them |
 | Tool handling | six named adapters | capability-first routing + four prompt shapes + twelve adapter families |
 | Failure handling | a checklist | coded manual F1–F19, cost ladder, three-strike rule |
 
@@ -48,7 +48,7 @@ See [CHANGELOG.md](CHANGELOG.md) for the full list. The step renumbering (10→1
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
-│  SKILL.md — always loaded, deliberately lean                           │
+│  SKILL.md — always loaded, routes everything                           │
 │                                                                        │
 │    routing table:  request type → output mode → files to load          │
 │    hard rules · intake schema · defaults · self-check                  │
@@ -101,6 +101,22 @@ git clone https://github.com/wuwangzhang1216/DirectorSKILL.git .claude/skills/ci
 ```
 
 Reload Claude Code (or your host agent) and the skill becomes available.
+
+## Updating
+
+An install is a git checkout, so update it in place:
+
+```bash
+cd ~/.claude/skills/cinematic-director && git pull
+```
+
+Check which version you are running — `metadata.version` in the installed `SKILL.md` frontmatter:
+
+```bash
+grep -A2 '^metadata:' ~/.claude/skills/cinematic-director/SKILL.md
+```
+
+2.0.0 renamed and extended the output-mode letters (A–F became A–J) and the pipeline steps (10 became 13). An older checkout answers with the old letters, so a mode this README documents — H, I, J — looks as though the skill simply does not have it. That symptom means you are on 1.x. Pull, then reload the host agent.
 
 ## Quick start
 
@@ -229,7 +245,8 @@ cinematic-director/
 │   ├── edit-timeline-template.md         # Mode I
 │   └── qc-checklist.md                   # Mode J
 └── evals/
-    └── evals.json                        # Behavior contract
+    ├── evals.json                        # Behavior contract
+    └── run.md                            # How to run the suite and score a result
 ```
 
 ## Extending
@@ -237,7 +254,7 @@ cinematic-director/
 - **Add a director**: `references/director_styles/NN_<slug>.md` using the v2 section structure, with a filled `风格参数` block and the shared control scene; then register in four places.
 - **Add a video or image tool**: append an adapter block plus a matrix column. No `SKILL.md` change needed unless the tool shifts a global default.
 - **Add a genre**: append a block to `references/genre-playbooks.md` using the same fixed field set, plus a row in the comparison table.
-- **Add a failure code**: F-codes are append-only; add F19+ with symptom, ranked causes, cost-ordered fixes, and a before/after pair.
+- **Add a failure code**: F-codes are append-only; add F20+ with symptom, ranked causes, cost-ordered fixes, and a before/after pair.
 - **Add an output mode**: only if genuinely distinct from A–J.
 - **Add an eval**: append a case to `evals/evals.json`.
 
@@ -251,9 +268,9 @@ Tool adapters describe **capability classes** observed at the time of writing. A
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). That file is unmodified MIT text with no appended terms, so the `license: MIT` declaration in `SKILL.md` resolves to exactly what the file grants.
 
-The MIT grant covers the skill files. The usage rule above governs *how* you apply the directorial knowledge with respect to existing films, which is a separate concern from software licensing.
+The MIT grant covers the skill files. The usage rule above is not a licence condition; it states what the style modules do and do not license. Copyright in any real film stays with its rights holders, and nothing here conveys an interest in it. That rule governs *how* you apply the directorial knowledge with respect to existing films, which is a separate concern from software licensing.
 
 ---
 
@@ -263,7 +280,7 @@ The MIT grant covers the skill files. The usage rule above governs *how* you app
 
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Skill](https://img.shields.io/badge/Claude_Skill-cinematic--director-blue)
-![版本](https://img.shields.io/badge/version-2.0.0-green)
+![版本](https://img.shields.io/badge/version-2.1.0-green)
 [![lint](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/markdownlint.yml)
 [![link check](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/links.yml/badge.svg)](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/links.yml)
 
@@ -293,7 +310,7 @@ v1 掌握的是导演的词汇，v2 掌握的是词汇背后的手艺。
 | 参考文件 | 4 个 | 13 个 |
 | 导演风格 | 14 位 | 20 位 |
 | 模板 | 4 个 | 8 个，全部带已填好的实例 |
-| 上下文策略 | 全量加载 | 路由表——`SKILL.md` 保持精简，深度按需加载 |
+| 上下文策略 | 全量加载 | 路由表——深度内容移到路由表之后，`SKILL.md` 每次只加载一个请求需要的文件集，而不是全部 |
 | 工具处理 | 6 个具名适配器 | 能力优先路由 + 4 种提示词形态 + 12 个适配器家族 |
 | 失败处理 | 一张清单 | 编码手册 F1–F19、成本阶梯、三振规则 |
 
@@ -305,7 +322,7 @@ v1 掌握的是导演的词汇，v2 掌握的是词汇背后的手艺。
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
-│  SKILL.md — 始终在上下文里，刻意保持精简                                 │
+│  SKILL.md — 始终在上下文里，负责路由分发                                 │
 │                                                                        │
 │    路由表：需求类型 → 输出模式 → 该加载哪些文件                          │
 │    硬规则 · 输入 schema · 默认值 · 自检清单                              │
@@ -358,6 +375,22 @@ git clone https://github.com/wuwangzhang1216/DirectorSKILL.git .claude/skills/ci
 ```
 
 重新加载 Claude Code（或你的宿主 agent）即可触发。
+
+## 更新
+
+安装本身就是一个 git 检出，原地更新即可：
+
+```bash
+cd ~/.claude/skills/cinematic-director && git pull
+```
+
+查看当前跑的是哪个版本——已安装 `SKILL.md` frontmatter 里的 `metadata.version`：
+
+```bash
+grep -A2 '^metadata:' ~/.claude/skills/cinematic-director/SKILL.md
+```
+
+2.0.0 重命名并扩展了输出模式字母（A–F 变成 A–J）和流水线步骤（10 步变成 13 步）。旧检出只会用旧字母作答，于是本 README 写着的模式——H、I、J——看起来就像这个 skill 根本没有。出现这个症状就说明你还在 1.x：pull 一次，再重新加载宿主 agent。
 
 ## 快速开始
 
@@ -455,7 +488,7 @@ Mode I：带出入点、留头留尾、由配对首尾帧构造的转场、贯�
 - **加导演**：新建 `references/director_styles/NN_<slug>.md`，沿用 v2 结构，填满 `风格参数`，使用统一对照场景，然后在 4 处登记。
 - **加视频/图像工具**：追加一段适配器加一列能力矩阵。除非该工具改变了全局默认值，否则不用动 `SKILL.md`。
 - **加类型片**：在 `references/genre-playbooks.md` 追加一块，字段集与现有类型一致，并在对比表加一行。
-- **加失败代码**：F 编码只增不改，从 F19 起，四个区块齐全。
+- **加失败代码**：F 编码只增不改，从 F20 起，四个区块齐全。
 - **加输出模式**：只有真正区别于 A–J 时才加。
 - **加 eval**：在 `evals/evals.json` 追加用例。
 
@@ -469,6 +502,6 @@ Mode I：带出入点、留头留尾、由配对首尾帧构造的转场、贯�
 
 ## 许可证
 
-MIT，见 [LICENSE](LICENSE)。
+MIT，见 [LICENSE](LICENSE)。该文件是未经修改的 MIT 原文，没有附加条款，因此 `SKILL.md` 里 `license: MIT` 的声明与文件实际授予的权利完全一致。
 
-MIT 授权覆盖 skill 文件本身。上方"使用规则"约束的是*如何*把这些导演知识应用到已有电影上，是与软件许可分开的另一个问题。
+MIT 授权覆盖 skill 文件本身。上方"使用规则"不是附加的许可条款，它陈述的是风格模块授权什么、不授权什么：任何真实电影的版权仍归其权利人所有，本仓库不转让其中任何权益。该规则约束的是*如何*把这些导演知识应用到已有电影上，是与软件许可分开的另一个问题。

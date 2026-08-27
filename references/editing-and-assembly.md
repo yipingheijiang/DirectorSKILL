@@ -66,14 +66,15 @@ If you cannot name the motivation, the cut is arbitrary and the audience feels i
 
 | Motivation | Trigger frame | Correct when | Cliché it invites | AI-specific note |
 |---|---|---|---|---|
-| Cut on action | Roughly one third into a movement in A; resume roughly halfway through it in B | Continuous physical business; the default for invisible cutting | Cutting on every door, every sit, every handshake | Hides drift best. Motion masks difference between two generations — use it wherever the two clips disagree |
+| Cut on action | Roughly one third into a movement in A; resume in B one sixth of the movement later, clamped to 2–8 f — see the overlap trim rule below | Continuous physical business; the default for invisible cutting | Cutting on every door, every sit, every handshake | Hides drift best. Motion masks difference between two generations — use it wherever the two clips disagree |
 | Cut on look | The frame after the eyeline settles off-screen | Establishing what a character knows or wants | The mechanical look / POV / look-back triplet on every beat | Cheapest coverage in the pipeline: the POV clip needs no character in it, so no identity risk |
 | Cut on sound | The picture cuts 4–12 f after the sound arrives | Redirecting attention; motivating a location change | A whoosh on every transition | Lets you cut between clips that share nothing visually. See pre-lap in [sound-and-dialogue.md](sound-and-dialogue.md) |
 | Cut on idea | Wherever the thought completes, regardless of motion | Essayistic, montage, irony, thematic rhyme | Hourglass-to-crowd "time passes" matches | The only motivation that survives a total visual mismatch, so it rescues incompatible generations |
 | Cut on emptiness | When the frame has nothing left to give | The shot has been exhausted and holding longer would be about the director, not the scene | The meaningful stare held 4 s past its meaning | Watch for it in reverse: AI clips run out of content early because the model stops inventing. Cut there |
 | Cut on impact | Exactly on the hit, land, or slam — or 1–2 f before it | Violence, comedy falls, doors, decisions | Cutting on every punch to conceal that nothing connects | In AI film, concealing that nothing connects is a legitimate primary use, not a cheat |
+| Cut on juxtaposition of two lines | Leave line A on its question, before its outcome; land in line B on its own live moment | Two lines of action running at once in story time — cross-cutting, a threat against its target | The intercut ticking clock on a metronome; the rescuer who is always exactly halfway there | The cheapest cut available here: the two clips share no space, no axis and no cast, so nothing has to match. See Cross-cutting two lines below |
 
-Five of the six appear in the worked assembly at the end of this file. Cut on impact is the absent one, because nothing in that scene lands — which is itself the design.
+Five of the seven appear in the worked assembly at the end of this file. The two absent are cut on impact, because nothing in that scene lands, and cut on juxtaposition, because the scene follows one line throughout — both of which are the design.
 
 ## Transition engineering for separately generated clips
 
@@ -158,7 +159,7 @@ Practical trim rule: **discard the first 8 f and the last 12 f of every generate
 
 Cut mid-motion, not at rest. A cut on a static frame invites the eye to compare A's last frame with B's first frame in detail, and it will find every mismatch. A cut during movement gives the eye a vector to follow instead of an inventory to audit. Place the cut point where subject velocity is at or near its peak.
 
-When cutting on action, remove 2–4 f of the movement across the cut. The eye fills them in and the cut feels tighter; leaving the action complete on both sides makes it feel duplicated.
+Overlap trim rule. When cutting on action, remove **one sixth of the movement's on-screen duration, clamped to a 2 f floor and an 8 f ceiling**. The eye fills the removed slice in and the cut feels tighter; leaving the action complete on both sides makes it feel duplicated. The clamp is what makes one rule work at both ends: a 0.3 s snap gives 1.2 f, which rounds to nothing, so take 2; a 3 s head turn gives 12 f, and an elision that long stops being invisible and reads as a jump, so take 8. Between 0.5 s and 2.0 s the sixth lands inside 2–8 f on its own and no clamp applies — which is most directed gesture, and exactly the band [blocking-and-staging.md](blocking-and-staging.md) grades most reliable for generation, so this is the case you will be in.
 
 ## Rhythm patterns as reusable devices
 
@@ -170,6 +171,35 @@ When cutting on action, remove 2–4 f of the movement across the cut. The eye f
 | Horror delay | Hold a reveal-worthy frame past comfort, then either nothing or the event | Hold 3–5 s longer than feels right; if the event comes, land it at an unpredictable point inside a 2–6 s window | The audience must not be able to count to it. Alternate delivering and withholding across the film |
 | The breath | One held near-empty shot immediately after a shock | 2.5–4.0 s, ambience only, no music, no cut inside it | Without it the shock is not remembered. This is the shot everyone cuts for time and should not |
 | Rule-of-three escalation | Three shots at the same size, same angle, same length, one element escalating; break on the fourth | 3 × 1.5–2.5 s, then a shot of different size and different length | Works identically for comedy and dread. The break is the payload; the repetition is the setup |
+
+### Cross-cutting two lines
+
+Which line a beat belongs to is decided upstream, in the `thread` column of [beat-sheet-template.md](../assets/beat-sheet-template.md). The cut plan inherits that assignment; it does not invent it.
+
+1. **Each line must be identifiable from its own first shot** — different location, different light level, different lead body. If the audience needs a second shot of a line to know which line it is in, you have one confusing scene rather than two.
+2. **Each line carries its own ASL, and both tighten toward the convergence.** Start them apart — say 5 s against 2.5 s — and bring both down to the tighter number as the beat approaches. Two lines cut at the same ASL throughout read as one scene shot in two places.
+3. **Alternate in shortening blocks**: 3 shots / 3 shots, then 2 / 2, then 1 / 1. Block length is the tension gauge, and the audience reads it without being told.
+4. **The convergence beat is the first shared frame or the first shared sound** — a phone answered in both lines, a door opened from both sides, one siren audible in each. Name it before you write either line, because every duration upstream is timed to it.
+5. If the lines never converge you have not cross-cut, you have interleaved two scenes, and the audience will spend both of them waiting.
+
+Worked, 32.7 s. Line A, a woman driving: WS/MS, six shots, 6.0 / 5.0 / 4.0 / 3.0 / 2.0 / 1.5. Line B, a phone ringing in an empty kitchen: ECU/MCU, six shots, 3.0 / 2.5 / 2.0 / 1.5 / 1.2 / 1.0. Blocks 3/3, then 2/2, then 1/1; both lines land on 1.0–1.5 s at the end. Convergence is sound — her ringtone starts in the car under the last kitchen shot, 8 f before the picture cuts to her. Twelve single-location clips, no frame containing both.
+
+AI note: this is the cheapest structural device in the pipeline. Two locations are two identity islands that never share a frame — no two-person drift, no shared axis to hold across a cut, no lip-sync collision, and each line can be generated from its own keyframe set and graded on its own. What it costs instead is the convergence: that is the one shot where both lines must appear together, so it is a full character-performance generation with retries budgeted, or you design the convergence as sound and never generate such a frame at all.
+
+### Montage and time compression
+
+A run of shots reads as time passing rather than as a list only when it is measurable.
+
+1. **Name one monotonically advancing variable the audience can read** — light from dawn to dusk, a page stack growing, snow accumulating, a bottle emptying, a wound closing. One variable. Three variables cancel out and the audience tracks none of them.
+2. **Hold composition at the head and the tail.** Same size, same angle, same framing on the first and last shot of the run, so the change in the variable is measured against a fixed frame. Everything between those two is free.
+3. **The thing that tells the audience time passed is the sound bed, not the pictures.** One continuous piece of music or one unbroken ambience across the whole run, its own accents landing off the picture cuts — see [sound-and-dialogue.md](sound-and-dialogue.md). Re-trigger the bed at a cut and the run collapses into a list of separate facts.
+4. ASL bands are in the table at the top of this file (montage, mid-intensity and montage, terminal), and the cost warning that goes with them applies hardest here: at terminal ASL, generate one long clip and harvest fragments rather than ordering one clip per cut.
+
+This is what separates a montage from the fast slideshow the rules below warn about. A slideshow is a run with no advancing variable and a bed that restarts or is absent, so every shot is a new fact and nothing accumulates. Test: hide the last shot of the run and the audience can still predict roughly what it shows. If they cannot, there is no variable and no compression.
+
+Worked, 10 s, five shots at ASL 2.0 s: a man relearning to walk along a hospital corridor rail. Head and tail are the same WS from the same camera mark; the variable is how far along the rail he has got — 1 m, 3 m, 6 m, 9 m, the full length. Shots 2–4 are free to be MCU hands, ECU feet, MS back. One piano cue runs under all five with no cut in it. Hide the fifth shot and the audience already knows what it shows.
+
+AI note: a monotonic variable is the easiest thing in this pipeline to pin on a keyframe, because it is a still-image property — light level, pile height, liquid line. Build the head and tail frames first as a pair, set the intermediate values between them, and each clip then only has to animate a small movement inside an already-correct frame.
 
 ## Anti-slideshow rules at the edit stage
 

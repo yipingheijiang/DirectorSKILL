@@ -33,6 +33,10 @@ Function first, size second. If you cannot name the function, you do not have a 
 
 ## Shot sizes
 
+This file owns the size ladder: six rungs, EWS 1 · WS 2 · MS 3 · MCU 4 · CU 5 · ECU 6. Every
+"two size steps" rule in this package is counted on these six rungs and no others — other files
+cite the ladder rather than restating it.
+
 Sizes are a ladder of psychological distance. Moving two rungs at a cut is a statement. Moving
 one rung with the camera still on the same axis reads as a stutter rather than a cut: if the
 angle does not change, change size by two rungs; if the angle changes by 30 degrees or more,
@@ -267,10 +271,23 @@ further down the page means further out from the axis.
      screen-left looking right and B is screen-right looking left.
      Cut to [X] and they swap sides: A is now screen-right looking
      left, and the audience reads it as the two of them changing seats.
+
+     A third figure C standing off the line changes nothing while A
+     and B hold the beat; once C takes it, the live line is B-C or
+     A-C and [1]-[4] must be re-checked against that line instead.
 ```
 
 The camera does not have to stay in a narrow arc: anywhere below the line is legal, including a
 position past B. What matters is the side, not the distance or the angle.
+
+With three or more people the axis belongs to the currently dominant pair — whoever is exchanging
+the beat — and it is redrawn the moment attention shifts to a different pair. For the shot list
+that means the redraw is a shot (a wide holding all three in their new relation) or it is a move
+(an arc that carries the audience onto the new line); it is never a silent cut, or the third body
+reads as having teleported. Name the owning pair in every row of a three-hander — `axis:
+ANNA–MARCO` — because a model has no concept of the redraw and will place the third figure
+wherever composition suggests. Three-body staging patterns are in
+[blocking-and-staging.md](blocking-and-staging.md).
 
 Legitimate ways across the line, in ascending order of how much they interrupt the scene:
 

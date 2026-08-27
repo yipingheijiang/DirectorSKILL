@@ -2,14 +2,14 @@
 
 Load this file when you reach Step 9 (tool adapter selection) or Step 10 (AI video prompt construction), when the user names a video model or says "I'm generating in X", or when a clip has failed and the tool is part of the diagnosis.
 
-**Staleness warning, before anything else.** Both capability matrices below and every per-tool block describe capability *classes as of writing*, not a live feature list. Vendors ship, rename, and remove controls constantly, and different surfaces of the same product expose different ones. Nothing on this page is a fact you can quote to a client — re-check it against current documentation, and read the panel in front of you before you promise a user a control.
+**Staleness warning, before anything else.** Both capability matrices below and every per-tool block describe capability *classes as of writing*, not a live feature list. Vendors ship, rename, and remove controls constantly, and different surfaces of the same product expose different ones. Nothing on this page is a fact you can quote to a client — re-check it against current documentation, and read the panel in front of you before you promise a user a control. **Capability snapshot: 2026-08.** Anything older than about two release cycles is a prior, not a fact — confirm on the panel before you rely on it.
 
 ## The capability-first rule
 
 Do not memorize tools. Tools rename features, ship new versions, and drop capabilities every few weeks. What is stable is the **set of control surfaces** a tool exposes. So:
 
-1. Ask (or infer) which control surfaces the user's tool exposes: does it take a first frame? a last frame? a character reference? does it have a camera slider, a motion-strength number, a negative-prompt field, native audio?
-2. Map those surfaces to one of four **prompt shapes** below.
+1. Ask (or infer) which control surfaces the user's tool exposes: does it take a first frame? a last frame? a character reference? an existing clip as the driving input? does it have a camera slider, a motion-strength number, a negative-prompt field, native audio?
+2. Map those surfaces to one of four **prompt shapes** below. The one surface that is not a prompt shape — video-to-video — is chosen here, at this step; see the section after the shapes.
 3. Write the prompt in that shape's slot order. Move any instruction into a UI control if a UI control exists for it — a slider always beats an adjective.
 4. Only then apply the tool-specific notes.
 
@@ -78,7 +78,7 @@ Slot order:
 2. Per segment `[mm:ss-mm:ss]`: shot size + angle | action | camera | light or sound cue
 3. Global exclusions
 
-Rule: every identity, palette, and lighting fact lives in the global block. Per-segment lines carry action and camera only. The moment you re-describe a character inside segment 2, the model recasts them.
+Rule: every identity, palette, and lighting fact lives in the global block. Per-segment lines carry action, camera, and at most one light or sound cue — never an identity, wardrobe, palette, or lighting restatement, and never an emotion word. The moment you re-describe a character inside segment 2, the model recasts them.
 
 ### The same scene in all four shapes
 
@@ -126,6 +126,25 @@ face, same coats, same corridor light in every segment. Hard cuts only, no disso
 
 Note what changes between them: S1 spends nothing on appearance because the still holds it; S2 spends more than half its words there; S3 buys a guaranteed endpoint by permitting exactly one change; S4 buys three shots by giving up per-shot control. Pick the cheapest shape your tool supports.
 
+## Video-to-video: the fifth control surface
+
+Video-to-video takes an existing clip as the driving input instead of a still or a sentence. It is chosen at the **adapter** step, not the prompt-shape step: there is no S5. You still write whichever of S1–S4 the shot wanted, and add one line naming what is held from the source clip and what is replaced.
+
+Two surfaces travel under the one name, and a family often exposes one and not the other:
+
+- **Restyle / relight / regrade / reframe** — the source clip supplies motion, blocking, and timing; the model replaces the look. Reach for it when the take is right and the picture is wrong.
+- **Performance transfer** — a driving clip supplies the motion (a face's expression, a body's movement) and a separate reference supplies the subject. Reach for it when the performance is right and the person is wrong.
+
+What it cannot do:
+
+- It cannot invent a new angle. The camera stays where it was, so a restyled wide is still a wide; a shot you wish were closer is a new generation, not a pass.
+- It inherits the take's blocking and timing exactly, including the beat that lands half a second late. If the performance is wrong, the source clip is wrong and no restyle reaches it.
+- Identity risk moves from generation to conform. The face is no longer being invented, it is being re-rendered frame by frame, so drift arrives as flicker and boil across the take rather than as one wrong face — and it arrives on a clip you already approved, which is what makes it easy to sign off. Check the identity landmark on the first, middle, and last frames of the output, never on a thumbnail.
+
+When a v2v pass is cheaper than rebuilding the keyframe, and when it is not, is repair economics — owned by the cost ladder in [failure-modes.md](failure-modes.md). Read it there rather than re-deriving it from the per-tool budgets on this page.
+
+Worked instance: a 5s clip is approved for performance and comes back beautified — blacks lifted to grey, wet pavement nobody wrote, every source pulled to one white balance. The keyframe is right and the take is right, so rebuilding either throws away work that already passed. Restyle the delivered clip instead, carrying the positive facts from *Night exteriors get beautified* below, hold face, wardrobe, and framing, and check the landmark on the first, middle, and last frames before you conform it.
+
 ## Control-surface matrix
 
 This matrix describes **capability classes as of writing, not a live feature list.** Vendors ship, rename, and remove features constantly, and different surfaces of the same product (web UI, app, API) expose different controls. Verify against current documentation before promising a user a specific control — no cell here is a fact you can quote to a client. Legend: `yes` / `part` (exists but limited, or only on some surfaces) / `no` (not exposed on the surfaces we looked at — treat as "check", not as "impossible") / `varies` (differs by surface, tier, or release often enough that only the docs can answer). Length classes are deliberately coarse, because published limits move constantly: `short` is a few seconds, `std` is the common single-generation length most tools default to, `graph` means you set it yourself as frame count over fps. Read the class as a planning bucket, never as a ceiling you can quote.
@@ -136,6 +155,7 @@ This matrix describes **capability classes as of writing, not a live feature lis
 | Image-to-video, first frame | yes | yes | yes | yes | yes | yes |
 | Last-frame slot | part | part | yes | yes | yes | yes |
 | Keyframe interpolation, 3+ frames | no | no | no | part | part | part |
+| Video-to-video, existing clip as driver | yes | varies | part | varies | part | part |
 | Character / subject reference | yes | part | part | yes | yes | part |
 | Style reference | part | part | part | yes | yes | part |
 | Explicit camera-control UI | yes | part | yes | part | part | part |
@@ -159,6 +179,7 @@ Same legend, same caveat — these are classes as of writing, to be re-checked a
 | Image-to-video, first frame | part | yes | yes | yes | yes | yes |
 | Last-frame slot | varies | part | part | yes | no | yes |
 | Keyframe interpolation, 3+ frames | no | no | no | part | no | yes |
+| Video-to-video, existing clip as driver | part | part | part | varies | no | yes |
 | Character / subject reference | part | yes | part | yes | part | yes |
 | Style reference | part | part | part | part | part | yes |
 | Explicit camera-control UI | no | part | yes | part | no | part |
@@ -180,8 +201,9 @@ If the user's tool is not in this matrix, ask three questions and route from the
 
 Each block has the same nine parts: Best for, Surfaces to exploit, Language, Aspect, Priority, Template, Rules, Typical failure and fix, Budget. The last is a motion-budget **ceiling** — a number on the shared scoring model below, read after the duration multiplier and the modifiers have been applied. Duration is already priced there, so never discount for it a second time in a per-tool rule.
 
-Two rules run across every block, so they are stated once here instead of twelve times:
+Three rules run across every block, so they are stated once here instead of twelve times:
 
+- Vendor names. Each heading names a capability **class**; the name is shorthand for the class, not a promise that the product is on sale. Products get renamed, folded into a suite, moved behind a different tier, or withdrawn between snapshots. Confirm the product is still offered on the surface the user actually has before you plan a shoot around a block — and if it is gone, the block still routes: find whichever product now exposes that set of surfaces and read the block against it.
 - Negative field. Where the surface exposes one, put every exclusion in it and keep the positive prompt free of the word "no". Where no negative field is exposed, convert every exclusion into a positive fact about the frame — "the platform behind her is empty", not "no extra people". Each block's Rules line says which case that family is usually in. Where the matrix reads `part` or `varies` the answer differs by surface and tier, so look at the panel in front of you; if you cannot confirm a field, write the prompt as though there is none, because that version is safe on both.
 - Aspect. On image-to-video the input still's ratio governs the output whatever the tool's aspect control says, so the aspect decision is really made at Step 8 and the video tool inherits it — see [image-model-adapters.md](image-model-adapters.md). Each block's Aspect line therefore covers the text-to-video path and names ratio *classes* (landscape / portrait / square), never a preset list, because preset lists change.
 
@@ -310,7 +332,7 @@ Shot 3 [6-10s]: wide, she turns and walks away from camera, slow push in.
 - Aspect — landscape, portrait, and square classes, usually chosen before generation rather than exposed as a field you can revise; portrait is well supported, so generate native for vertical rather than cropping.
 - Priority — single-shot instruction, shot description, action, camera, sound, what stays fixed.
 - Template — S2, with the single-shot instruction in the first sentence.
-- Rules — the negative field is `varies` and is absent on most consumer surfaces, so write every exclusion as a positive fact about the frame; this family in particular reads a bare negation as a topic and renders it. As of writing, the behaviour to plan around is a tendency to cut to new angles unbidden. If you need one continuous take, say so first: "One continuous shot. No cuts, no angle changes." Write the soundscape explicitly or it invents dialogue and music. With little or no seed control, reproducibility comes from prompt precision, not from re-rolling.
+- Rules — the negative field is `varies` and is absent on most consumer surfaces, so write every exclusion as a positive fact about the frame; this family in particular reads a bare negation as a topic and renders it. The behaviour to plan around, as of the snapshot date at the top of this file, is a tendency to cut to new angles unbidden; a release can retire it, so before you spend the single-shot instruction across a whole shot list, generate one clip without it and see whether the model still cuts. While it does, if you need one continuous take, say so first: "One continuous shot. No cuts, no angle changes." Write the soundscape explicitly or it invents dialogue and music. With little or no seed control, reproducibility comes from prompt precision, not from re-rolling.
 - Typical failure and fix — your one shot comes back as a three-shot mini-scene. Fix: single-shot instruction up front, exactly one action, and a duration sized to that one action.
 - Budget — ceiling 5 if you want single-shot control. Whatever you leave unspent, the model spends on cuts you did not ask for.
 
@@ -363,7 +385,7 @@ Shot 3 [6-10s]: wide, she turns and walks away from camera, slow push in.
 - Aspect — inherited from the still, and only from the still: this family has no meaningful aspect decision of its own, so the delivery ratio is composed at Step 8 and the animation pass follows it.
 - Priority — what moves, how much, nothing else.
 - Template — S1 with slots 3 and 4 only: one subject motion, one environmental motion. Leave the camera slot empty rather than filling it with words the tool will not honour.
-- Rules — the negative field is `part` on the animation pass and should be assumed inert: put the exclusion in the still instead, where the image model does have one, and write the video prompt as positive facts only. Treat it as a look-preserver, not a director. Low motion for any shot containing a face; high motion only for environment, weather, or abstract texture. Prose camera direction tends to land weakly here, so do not plan camera-led shots on this surface. Assume you are budgeting a full sound pass in the edit, and check the current documentation before promising anyone a native audio track.
+- Rules — the negative field is `part` on the animation pass and should be assumed inert: put the exclusion in the still instead, where the image model does have one, and write the video prompt as positive facts only. Treat it as a look-preserver, not a director. Low motion for any shot containing a face; high motion only for environment, weather, or abstract texture. Prose camera direction tends to land weakly here, so do not plan camera-led shots on this surface; if the panel has grown a camera control since the snapshot date, that is the first claim to retest — one clip — before you route a camera-led shot back to it. Assume you are budgeting a full sound pass in the edit, and check the current documentation before promising anyone a native audio track.
 - Typical failure and fix — you ask for a dolly-in and get a generic slow drift. Fix: bake the camera position into the still (generate the framing you want) and use video only for micro-motion; or move that shot to a tool with camera control.
 - Budget — ceiling 3.
 
@@ -497,6 +519,7 @@ Only tool-specific behavior lives here. The full negative-prompt library, EN/中
 | "I need the character to look the same across shots" | S1 or S3 | bind a reference, lock the seed, log both in the continuity bible |
 | "It keeps cutting to other angles" | S2 | put "one continuous shot, no cuts" first; drop to one action |
 | "The clip is too short for my action" | S1 twice | split at the pivot; between clips change the angle by ≥30°, or by two size steps if the axis is unchanged |
+| "I already have the clip, the look is wrong" | no shape change | video-to-video at the adapter step: hold the take, replace the look, then check identity on first, middle, and last frames |
 | "It came out warped / melty" | rescore | run the motion budget; cut the highest-scoring component first |
 | "It looks like a slideshow" | S1 | the still lacks implied motion — regenerate the keyframe mid-action, see [image-model-adapters.md](image-model-adapters.md) |
 | "I don't know what my tool supports" | ask 3 questions | input image? last-frame slot? negative field or motion number? |
