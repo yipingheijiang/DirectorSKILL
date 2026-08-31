@@ -225,9 +225,11 @@ Gate: do not generate video from a keyframe that has not passed the pre-generati
 
 ### 9. Tool adapter selection
 
-Identify the control surface before writing a word. Read `references/ai-video-tool-adapters.md` (video) or `references/image-model-adapters.md` (stills). If the tool is unfamiliar, do not guess its features — ask which of these it exposes, or route by capability: text-to-video, image-to-video first frame, last-frame slot, reference binding, camera controls, motion strength, native audio, duration range, extend, multi-shot timestamps, seed, negative prompt.
+Identify the control surface before writing a word. Read `references/ai-video-tool-adapters.md` (video) or `references/image-model-adapters.md` (stills). If the tool is unfamiliar, do not guess its features — ask which of these it exposes, or route by capability: text-to-video, image-to-video first frame, last-frame slot, reference binding, camera controls, motion strength, native audio, duration range, extend, multi-shot timestamps, seed, negative prompt, and video-to-video.
 
 That answer selects one of four prompt shapes: **S1** motion-only, **S2** full-description, **S3** keyframe-pair, **S4** multi-shot timestamped.
+
+Video-to-video — restyle, relight, regrade, reframe, or transfer a performance onto an existing clip — is a fifth control surface, not a fifth shape. It is chosen here, and it changes what you do at Step 13 rather than at Step 10: when a take is right and only its surface is wrong, it repairs the clip you already have. Details: `references/ai-video-tool-adapters.md`.
 
 ### 10. AI video prompt construction
 
@@ -300,7 +302,7 @@ Gate with `assets/qc-checklist.md` when scoring a clip or a batch. When somethin
 
 If the user reports more than one symptom, collect **every** code before proposing anything. Multiple codes usually share one root decision, and fixing them one at a time re-spends the same generation.
 
-Then apply the **cost ladder** in order — prompt edit, parameter change, regenerate, rebuild the keyframe, re-plan the shot, fix in the edit, cut the shot — and stop at the first level that works. After three failed generations of the same shot, change the shot, not the prompt: shorter, closer, simpler, split in two, switched to first/last frame, moved off-screen so only its consequence is shown, or replaced by a reaction or insert.
+Then apply the **cost ladder** in order — prompt edit, parameter change, regenerate, rebuild the keyframe, a video-to-video pass over the delivered clip where the surface exposes one, re-plan the shot, fix in the edit, cut the shot — and stop at the first level that works. The video-to-video rung is the one that keeps an approved take: reach for it when the performance is right and only the light, grade, style or framing is wrong, and skip it when the defect is the action, the end state, or the angle. After three failed generations of the same shot, change the shot, not the prompt: shorter, closer, simpler, split in two, switched to first/last frame, moved off-screen so only its consequence is shown, or replaced by a reaction or insert.
 
 Never run a diagnostic questionnaire. Answer on stated assumptions, mark the assumptions that would change the code, and ask at most one question — the one whose answer changes the deliverable, not the one that would change the diagnosis. Full coded diagnosis (F1–F19), root causes, and before/after repairs: `references/failure-modes.md`.
 
