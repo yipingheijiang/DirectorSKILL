@@ -62,8 +62,11 @@ wide, not in an extreme close-up of a 4cm gap.
 
 ## Template 1 — image-to-video, single shot
 
+When the user wants to retain a supplied image's composition or style, first apply [reference-image fidelity](../references/reference-image-fidelity.md). It supplies the input-role check and compact preservation clauses for this template; use only properties observed in the image.
+
 ```text
-[Camera]. Starting from the input image, [subject] is [start state], then [one primary action
+[Camera]. Begin from the composition established by the supplied first-frame image.
+[Subject] is [start state], then [one primary action
 with speed and direction]. [Environment element] [moves how]. End with [explicit end state].
 Maintain [invariants]. Avoid [negatives].
 ```
@@ -292,7 +295,7 @@ Run on every prompt before you send it. Five questions, and the failure each one
 - [ ] **Explicit end state.** Could you photograph the last sentence as a still? If not, rewrite
   it as a pose or a composition. (Guards F5.)
 - [ ] **Invariants present.** The `ID_`, `LOCK_`, and `LIGHT_` strings, compressed but not
-  reworded, plus the scene's checkable anchor. (Guards F1, F7, F8, F12.)
+  reworded, plus the scene's checkable anchor. For reference preservation, also check the input role and observed look against [reference-image fidelity](../references/reference-image-fidelity.md). (Guards F1, F7, F8, F12.)
 - [ ] **Negatives matched to real risk.** Name the condition in this shot that makes each one
   plausible — including the `NEG_BASE` classes, which you select from rather than paste whole.
   Cannot name it? Delete it. About six classes is the ceiling: every unearned negative dilutes

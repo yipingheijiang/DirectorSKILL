@@ -3,12 +3,16 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Claude Skill](https://img.shields.io/badge/Claude_Skill-cinematic--director-blue)
 ![Version](https://img.shields.io/badge/version-2.1.0-green)
-[![markdownlint](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/markdownlint.yml)
-[![links](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/links.yml/badge.svg)](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/links.yml)
+[![markdownlint](https://github.com/yipingheijiang/DirectorSKILL/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/yipingheijiang/DirectorSKILL/actions/workflows/markdownlint.yml)
+[![links](https://github.com/yipingheijiang/DirectorSKILL/actions/workflows/links.yml/badge.svg)](https://github.com/yipingheijiang/DirectorSKILL/actions/workflows/links.yml)
 
 A Claude Code / Claude Agent skill that turns a script, a paragraph of prose, or a single keyframe into a complete production plan — beats, director's book, blocking, shot list with coverage, keyframe prompts, image-to-video motion prompts, a sound plan, an edit timeline, a continuity bible, and a coded QC repair loop. Optionally apply one of twenty director-style lenses as a coherent overlay across the entire pass.
 
 > [中文版本](#中文版本)
+
+This maintained edition is bound to [yipingheijiang/DirectorSKILL](https://github.com/yipingheijiang/DirectorSKILL), based on the original [wangzhang-wu project](https://github.com/wuwangzhang1216/DirectorSKILL). Original authorship and the MIT license are retained.
+
+For requests to animate a supplied image while keeping its look, [reference-image fidelity](references/reference-image-fidelity.md) covers the opening composition, observed light/color/focus/texture, permitted motion, and verification. It includes Chinese and English patterns and a scoped H3 first-frame wrapper; it does not promise pixel-identical output.
 
 ---
 
@@ -90,24 +94,40 @@ See [CHANGELOG.md](CHANGELOG.md) for the full list. The step renumbering (10→1
 
 ## Installation
 
+For Codex, install this repository directly into the skill directory so the installed files and the Git checkout are the same copy:
+
+```bash
+git clone https://github.com/yipingheijiang/DirectorSKILL.git ~/.codex/skills/cinematic-director
+```
+
 Skill files live in `~/.claude/skills/<skill-name>/` (user-level) or `.claude/skills/<skill-name>/` (project-level). The folder name must match the `name:` field in `SKILL.md` (`cinematic-director`).
 
 ```bash
-git clone https://github.com/wuwangzhang1216/DirectorSKILL.git ~/.claude/skills/cinematic-director
+git clone https://github.com/yipingheijiang/DirectorSKILL.git ~/.claude/skills/cinematic-director
 ```
 
 ```bash
-git clone https://github.com/wuwangzhang1216/DirectorSKILL.git .claude/skills/cinematic-director
+git clone https://github.com/yipingheijiang/DirectorSKILL.git .claude/skills/cinematic-director
 ```
 
 Reload Claude Code (or your host agent) and the skill becomes available.
 
 ## Updating
 
+For a Codex install, `origin` should point to `https://github.com/yipingheijiang/DirectorSKILL.git` and `main` should track `origin/main`. Inspect local changes before updating:
+
+```bash
+git -C ~/.codex/skills/cinematic-director status --short
+git -C ~/.codex/skills/cinematic-director remote -v
+git -C ~/.codex/skills/cinematic-director pull --ff-only
+```
+
+Preserve uncommitted work and reconcile divergence before pulling or pushing; do not overwrite the installed skill with an unrelated checkout. Git binding does not create automatic synchronization: edits and pushes remain explicit maintenance actions. The same commands apply to a Claude install with its path substituted.
+
 An install is a git checkout, so update it in place:
 
 ```bash
-cd ~/.claude/skills/cinematic-director && git pull
+git -C ~/.claude/skills/cinematic-director pull --ff-only
 ```
 
 Check which version you are running — `metadata.version` in the installed `SKILL.md` frontmatter:
@@ -232,6 +252,7 @@ cinematic-director/
 │   ├── failure-modes.md                  # Coded manual F1-F19, cost ladder, three-strike rule
 │   ├── ai-video-tool-adapters.md         # Video model surfaces, prompt shapes S1-S4
 │   ├── image-model-adapters.md           # Image model surfaces, character/location consistency
+│   ├── reference-image-fidelity.md       # First-frame composition, appearance preservation, verification
 │   ├── continuity-bible.md               # Character/location/prop/shot schemas + worked example
 │   ├── production-workflow.md            # Operating loop, difficulty rubric, versioning, handoff
 │   └── director_styles/                  # 20 style overlays + index + comparisons
@@ -278,11 +299,15 @@ The MIT grant covers the skill files. The usage rule above is not a licence cond
 
 # Cinematic Director Skill（中文版本）
 
+本维护版本绑定 [yipingheijiang/DirectorSKILL](https://github.com/yipingheijiang/DirectorSKILL)，基于 [wangzhang-wu 原项目](https://github.com/wuwangzhang1216/DirectorSKILL)，保留原作者署名和 MIT 许可证。
+
+新增[沿用原图构图与风格](references/reference-image-fidelity.md)：从参考图建立的构图开始，保留实际观察到的人物、光影、色彩、焦点层次与绘制质感，再安排明确的动作和运镜。包含中英文提示词模板及适用 H3 首帧流程的写法；明确区分“要求保持一致”和“已验证成片一致”。
+
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Skill](https://img.shields.io/badge/Claude_Skill-cinematic--director-blue)
 ![版本](https://img.shields.io/badge/version-2.1.0-green)
-[![lint](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/markdownlint.yml)
-[![link check](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/links.yml/badge.svg)](https://github.com/wuwangzhang1216/DirectorSKILL/actions/workflows/links.yml)
+[![lint](https://github.com/yipingheijiang/DirectorSKILL/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/yipingheijiang/DirectorSKILL/actions/workflows/markdownlint.yml)
+[![link check](https://github.com/yipingheijiang/DirectorSKILL/actions/workflows/links.yml/badge.svg)](https://github.com/yipingheijiang/DirectorSKILL/actions/workflows/links.yml)
 
 一个 Claude Code / Claude Agent skill：把剧本、一段散文或一张关键帧，转化为完整的制作方案——节拍表、导演书、走位、含覆盖策略的分镜表、关键帧提示词、图生视频动作提示词、声音方案、剪辑时间线、连贯性圣经，以及带编码的 QC 修复流程。可叠加 20 位导演风格中的任意一位，作为贯穿全流程的统一镜头。
 
@@ -364,24 +389,40 @@ v1 掌握的是导演的词汇，v2 掌握的是词汇背后的手艺。
 
 ## 安装
 
+Codex 安装到技能目录，直接用 Git 管理同一份文件：
+
+```bash
+git clone https://github.com/yipingheijiang/DirectorSKILL.git ~/.codex/skills/cinematic-director
+```
+
 skill 文件放在 `~/.claude/skills/<skill-name>/`（用户级）或 `.claude/skills/<skill-name>/`（项目级）。文件夹名必须与 `SKILL.md` 的 `name:` 一致（`cinematic-director`）。
 
 ```bash
-git clone https://github.com/wuwangzhang1216/DirectorSKILL.git ~/.claude/skills/cinematic-director
+git clone https://github.com/yipingheijiang/DirectorSKILL.git ~/.claude/skills/cinematic-director
 ```
 
 ```bash
-git clone https://github.com/wuwangzhang1216/DirectorSKILL.git .claude/skills/cinematic-director
+git clone https://github.com/yipingheijiang/DirectorSKILL.git .claude/skills/cinematic-director
 ```
 
 重新加载 Claude Code（或你的宿主 agent）即可触发。
 
 ## 更新
 
+Codex 安装的 `origin` 应指向 `https://github.com/yipingheijiang/DirectorSKILL.git`，`main` 跟踪 `origin/main`。先检查本地修改，再更新：
+
+```bash
+git -C ~/.codex/skills/cinematic-director status --short
+git -C ~/.codex/skills/cinematic-director remote -v
+git -C ~/.codex/skills/cinematic-director pull --ff-only
+```
+
+有未提交修改或分叉时先保留并合并，避免覆盖本地技能。绑定表示维护同一个 Git 仓库，不会自动上传修改；后续提交和推送按维护任务执行。Claude 安装替换为相应技能路径即可。
+
 安装本身就是一个 git 检出，原地更新即可：
 
 ```bash
-cd ~/.claude/skills/cinematic-director && git pull
+git -C ~/.claude/skills/cinematic-director pull --ff-only
 ```
 
 查看当前跑的是哪个版本——已安装 `SKILL.md` frontmatter 里的 `metadata.version`：

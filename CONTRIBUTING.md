@@ -83,6 +83,7 @@ Where two files could reasonably cover the same thing, one owns it and the rest 
 | The F-code taxonomy | `references/failure-modes.md` |
 | The motion budget | `references/ai-video-tool-adapters.md` |
 | Prompt wording — verb banks, replacement table, negatives | `references/prompt-lexicon.md` |
+| Preserving a supplied image's composition and appearance, with fidelity checks | `references/reference-image-fidelity.md` |
 
 Negative prompts name **instances**, never categories, everywhere in the skill. "No modern objects" is unresolvable by a generator and is the documented mechanism behind F8 — name the things instead.
 
@@ -227,7 +228,7 @@ Assertions should be **observable** in the output text (never about hidden reaso
 
 ## Reporting issues
 
-Issues live at <https://github.com/wuwangzhang1216/DirectorSKILL/issues>. Useful issue types:
+Issues live at <https://github.com/yipingheijiang/DirectorSKILL/issues>. Useful issue types:
 
 - "The skill produces X when I expect Y" — include the prompt and the problematic output
 - "Style overlay for director X is too generic or too derivative" — say what is off
@@ -313,4 +314,4 @@ Issues live at <https://github.com/wuwangzhang1216/DirectorSKILL/issues>. Useful
 
 ## 报 issue
 
-issue 见 <https://github.com/wuwangzhang1216/DirectorSKILL/issues> 。常见类型：输出与预期不符（附 prompt 和输出）、某导演模块太泛或太像抄、某工具适配器过时（附官方文档链接）、某失败代码误诊（附 prompt、片子描述、实际有效的修复）。
+issue 见 <https://github.com/yipingheijiang/DirectorSKILL/issues> 。常见类型：输出与预期不符（附 prompt 和输出）、某导演模块太泛或太像抄、某工具适配器过时（附官方文档链接）、某失败代码误诊（附 prompt、片子描述、实际有效的修复）。

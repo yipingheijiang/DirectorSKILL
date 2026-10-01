@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Reference-image fidelity guidance for beginning from the supplied composition, preserving observed identity, light, color, focus and rendering texture, and choosing motion that supports the requested action.
+- Chinese and English preservation patterns, a scoped H3 first-frame wrapper, and source-to-result checks that distinguish prompt validation from verified video fidelity.
+- Canonical maintenance repository metadata and Codex installation/update instructions for `yipingheijiang/DirectorSKILL`.
+
+### Fixed
+
+- Explicit reference-preservation constraints now take precedence over director overlays and generic realism defaults.
+- The S1 adapter now describes preservation clauses as instructions rather than guaranteed appearance locks.
+
 ## [2.1.0] - 2026-08-27
 
 An audit release. A full adversarial audit of the package found the content layer sound and the

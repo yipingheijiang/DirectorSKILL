@@ -31,7 +31,7 @@ Slot order:
 6. Continuity lock — a stability instruction, never a description
 7. Exclusions (only if the tool has no negative field)
 
-Rule: describe change, not appearance. "She wears a red coat" is a description and re-renders the coat; "the coat does not change" is a lock and holds it. Anything the still already fixes gets a lock clause at most.
+Rule: describe change, not a redesigned appearance. Use a compact preservation clause for what the still already fixes. These are instructions, not guaranteed locks. For requests to retain the supplied image's composition or style, [reference-image fidelity](reference-image-fidelity.md) owns first-frame assignment, observed appearance anchors, and validation. Keep this slot order unless the selected model requires an outer first-frame header.
 
 ### S2 — Full description (text-to-video)
 

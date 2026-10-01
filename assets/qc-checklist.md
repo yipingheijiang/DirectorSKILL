@@ -17,6 +17,8 @@ Worked examples use project `Under the Door` (`UTD`), scene 7, the five-shot sce
 
 ## Gate 1 — PRE-GENERATION
 
+For a supplied image whose look must be retained, apply the before/after checks in [reference-image fidelity](../references/reference-image-fidelity.md): use the input-role and prompt checks here, and the source-to-result comparison at Gate 2. Record image or video checks that could not be performed as unverified.
+
 | # | Weight | Category | Check |
 |---|---|---|---|
 | P1 | 20 | Story function | Every shot names a beat id and the job it does for that beat. A shot whose function is "it looks good" is deleted, not scored |
@@ -45,7 +47,7 @@ under plausible audio, and audio errors hide under picture you have already acce
 | G3 | 20 | Motion, anatomy, physics | Limbs and fingers stay countable; weight, contact, and gravity read correctly; speed matches life | F3, F10, F13, F14 |
 | G4 | 10 | Camera behavior | One move, the one you asked for, at the distance you asked for; no unrequested drift or zoom | F6, F17 |
 | G5 | 15 | Frame integrity | No extra people or objects; nothing that was in frame at the head of the clip has gone missing or come back changed at the tail; no rendered text or watermark; no morphing background | F9, F11, F19 |
-| G6 | 10 | Look consistency | Lighting direction, level, color temperature, and grain hold across the clip | F12, F16 |
+| G6 | 10 | Look consistency | Lighting direction, level, color temperature, and grain hold across the clip; when preserving a source image, compare its palette, focus layers, diffusion or illustrated texture with the result, allowing only requested changes | F12, F16 |
 
 - **80–100**: use as-is.
 - **65–79**: usable if an edit-side fix exists — trim the bad frames, crop in, regrade, or cover

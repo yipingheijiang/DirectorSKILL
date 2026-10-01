@@ -17,6 +17,7 @@ license: MIT
 metadata:
   version: "2.1.0"
   author: "wangzhang-wu"
+  repository: "https://github.com/yipingheijiang/DirectorSKILL"
 ---
 
 # Cinematic Director Skill
@@ -55,6 +56,7 @@ Load *parts* of files, not whole files. The four largest references — `failure
 | Shot list, storyboard plan, shooting table | D | `assets/shot-plan-template.md`, `references/cinematic-language.md`, `references/blocking-and-staging.md`, `references/production-workflow.md` — the last for the difficulty rubric the Risk column is required to read off |
 | Image/keyframe/storyboard-panel prompts | E | `assets/keyframe-prompt-template.md`, `references/image-model-adapters.md`, `assets/qc-checklist.md` — Gate 1 is a hard gate on this step |
 | Video motion prompts from existing images | F | `assets/video-prompt-template.md`, `references/prompt-lexicon.md`, `references/ai-video-tool-adapters.md` |
+| Animate a supplied image while retaining its composition or style / 保持原图风格 | F | also `references/reference-image-fidelity.md`; for explanation only, use its mechanism and evidence limits without generating a prompt pack |
 | Recurring characters/locations across shots | G | `references/continuity-bible.md` |
 | Sound design, music, dialogue, voice-over | H | `assets/sound-plan-template.md`, `references/sound-and-dialogue.md` |
 | "I have clips — how do I cut them together?" | I | `assets/edit-timeline-template.md`, `references/editing-and-assembly.md` |
@@ -182,7 +184,7 @@ Available: `spielberg`, `hitchcock`, `kubrick`, `kurosawa`, `scorsese`, `fellini
 
 **If the named director has no module, do not silently substitute one.** Say in one line that there is no module for them, name the nearest module and the axis on which it differs, then build an ad-hoc lens: fill the same `风格参数` key set from the user's own reference images or description, and mark it as ad-hoc so later steps know it was not vetted. Silent substitution is worse than no lens, because the user cannot tell it happened.
 
-Precedence: **director lens > genre playbook > project tone > skill defaults.** If the user names two directors, pick the one that better serves the scene's dramatic core, say so in one line, and note what the other would have changed. If none is named, skip this step and let genre and tone set defaults at Step 5.
+Precedence: **user's explicit changes and preservation constraints > director lens > genre playbook > project tone > skill defaults.** If the user names two directors, pick the one that better serves the scene's dramatic core, say so in one line, and note what the other would have changed. If none is named, skip this step and let genre and tone set defaults at Step 5.
 
 Style modules describe high-level methods. Never copy specific shots, lines, characters, or plots from real films.
 
@@ -219,6 +221,8 @@ Choose by continuity risk:
 
 Template: `assets/keyframe-prompt-template.md`. Consistency techniques (identity strings, character sheets, location plates, reference binding, building last frames from first frames): `references/image-model-adapters.md`.
 
+For an existing image whose composition or style must carry into video, read [reference-image fidelity](references/reference-image-fidelity.md) before applying a style lens. It owns input-role checks, appearance-preservation clauses, motion choices, and the distinction between a requested match and a verified result.
+
 If a style lens is active, this is the step where it is actually fixed. Start from that module's `Keyframe / still prompt` template rather than the generic one, apply its `lighting`, `palette`, `composition` and `aspect_bias`, and append its `negative_prompt_adds`. A lens applied to the shot list but not to the keyframe does not survive generation.
 
 Gate: do not generate video from a keyframe that has not passed the pre-generation checks in `assets/qc-checklist.md`.
@@ -234,6 +238,8 @@ Video-to-video — restyle, relight, regrade, reframe, or transfer a performance
 ### 10. AI video prompt construction
 
 **S1 — motion-only** (image-to-video). The image already carries identity, composition, lighting, setting, costume, and style. The text defines motion, camera, timing, end state, and constraints — in this order:
+
+When preserving a supplied image, anchor the start state to its composition and use the compact preservation pattern in [reference-image fidelity](references/reference-image-fidelity.md). A model-specific first-frame header, when required, wraps this shape; it does not replace the actual image input.
 
 ```text
 [Camera behavior]. [Subject starts in visible state], then [one primary action with pace and direction].
