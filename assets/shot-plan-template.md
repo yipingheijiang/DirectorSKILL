@@ -2,6 +2,8 @@
 
 Load this file when you are at Step 7 (shot list and coverage) or the user asked for Mode D — a shot list, 分镜表, storyboard table, or "give me the shots".
 
+For a Chinese reference-image storyboard in prose, use [中文资产锚定分镜模板](reference-storyboard-template-zh.md) instead, unless the user explicitly requests a table.
+
 Build rows only after the beats exist ([beat sheet](beat-sheet-template.md)) and the rules exist ([director book](director-book-template.md)). A shot plan written before those two is a list of pictures.
 
 ## Shot table

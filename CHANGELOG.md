@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Chinese reference-anchored storyboard template with the requested asset, cast, setting, reference-use, previous-shot, timed-segment, output-constraint and visual-style sections.
+- Stable `<Picture N>` mapping and separate identity, environment, prop and optional first/last-frame roles; targeted segment constraints track dialogue, hand-held props, action endpoints and sound continuity without hard-coding example characters, runtimes or styles.
+- Mode D/F routing and bilingual usage documentation for the Chinese format. Explicit user formats remain authoritative, and native platform schemas remain separate from storyboard authoring.
 - Reference-image fidelity guidance for beginning from the supplied composition, preserving observed identity, light, color, focus and rendering texture, and choosing motion that supports the requested action.
 - Chinese and English preservation patterns, a scoped H3 first-frame wrapper, and source-to-result checks that distinguish prompt validation from verified video fidelity.
 - Canonical maintenance repository metadata and Codex installation/update instructions for `yipingheijiang/DirectorSKILL`.

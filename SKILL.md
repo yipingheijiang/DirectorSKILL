@@ -54,6 +54,7 @@ Load *parts* of files, not whole files. The four largest references — `failure
 | Visual treatment, director's book, "set the rules" | C | `assets/director-book-template.md`, `references/lighting-and-color.md`, `references/genre-playbooks.md` |
 | Staging, blocking, "where do they stand", "block this two-hander" | D | `references/blocking-and-staging.md`, `assets/shot-plan-template.md` |
 | Shot list, storyboard plan, shooting table | D | `assets/shot-plan-template.md`, `references/cinematic-language.md`, `references/blocking-and-staging.md`, `references/production-workflow.md` — the last for the difficulty rubric the Risk column is required to read off |
+| Chinese reference-image storyboard / 中文参考图分镜 / 资产图锚定、分段画面、输出约束 | D or F | `assets/reference-storyboard-template-zh.md`; when first/last frames or appearance preservation are requested, also `references/reference-image-fidelity.md`. Use this prose format unless the user requests a table or a native platform schema |
 | Image/keyframe/storyboard-panel prompts | E | `assets/keyframe-prompt-template.md`, `references/image-model-adapters.md`, `assets/qc-checklist.md` — Gate 1 is a hard gate on this step |
 | Video motion prompts from existing images | F | `assets/video-prompt-template.md`, `references/prompt-lexicon.md`, `references/ai-video-tool-adapters.md` |
 | Animate a supplied image while retaining its composition or style / 保持原图风格 | F | also `references/reference-image-fidelity.md`; for explanation only, use its mechanism and evidence limits without generating a prompt pack |
@@ -126,7 +127,7 @@ This block is a checklist for you. Never print it back to the user.
 
 Defaults when unspecified:
 
-- **Output language** — match the user's. **Generation prompt language** — English by default. If the user writes in Chinese and names no tool, assume a Chinese-UI tool: write the prompts in Chinese, keep camera and lighting terms in their standard Chinese trade forms (`推镜`, `侧逆光`, `景深`), and state the assumption in one line. Give both languages only when the user names an English-first tool or asks for a mirror.
+- **Output language** — match the user's. **Generation prompt language** — English by default. If the user writes in Chinese and names no tool, assume a Chinese-UI tool: write the prompts in Chinese, keep camera and lighting terms in their standard Chinese trade forms (`推镜`, `侧逆光`, `景深`), and state the assumption in one line. Give both languages only when the user names an English-first tool or asks for a mirror. An explicitly requested Chinese storyboard format takes precedence even when a model is named; do not replace it with English or a native schema unless that conversion is requested.
 - **Aspect** — 16:9 for narrative, 9:16 if the user says social/短视频/Reels/抖音.
 - **Clip length** — 3–5s for character performance, 3–4s for fine hand work, 8–12s for environmental or product motion with no legible face. Longer only when the model holds narrative stably and the shot earns it. Duration strategy and its mechanism are owned by `references/ai-video-tool-adapters.md`.
 - **Camera** — locked or one slow push-in when continuity is fragile. Complex moves only when the story needs them and the tool controls them.
@@ -204,9 +205,11 @@ Depth: `references/blocking-and-staging.md` — staging geometries, proxemics, b
 
 ### 7. Shot list and coverage
 
-Build rows only after beats and blocking are clear. Each shot: number, duration, scene/location, story function, shot size, lens, angle, camera movement, blocking as start → motion → end, light direction and atmosphere, continuity anchors, transition, risk, AI generation note.
+Build the shot plan only after beats and blocking are clear. For the table format, each shot carries: number, duration, scene/location, story function, shot size, lens, angle, camera movement, blocking as start → motion → end, light direction and atmosphere, continuity anchors, transition, risk, AI generation note.
 
 Template: `assets/shot-plan-template.md`. Grammar: `references/cinematic-language.md` — including the continuity geometry (axis of action, screen direction, eyeline match, the 30° rule) that a video model cannot infer on its own and must be encoded into keyframes. Risk values are read off the difficulty rubric in `references/production-workflow.md`; do not invent a second scale.
+
+For Chinese reference-image storyboards, use [中文资产锚定分镜模板](assets/reference-storyboard-template-zh.md) instead of the table unless the user requests the table. It owns the Chinese field order, `<Picture N>` asset mapping, optional endpoint roles, timestamped action blocks, and delivery checks. Keep planning reasoning internal; do not append table columns or a second deliverable to that format.
 
 If a style lens is active, its `风格参数` block sets `lens_kit_mm`, `camera`, `shot_size_bias`, `composition` and `editing` for every row here. Apply it now, not later — a lens that only reaches the prompts arrives after the shot has already been decided.
 
@@ -280,7 +283,9 @@ fastest way to get a generic performance in every segment at once.
 
 Templates: `assets/video-prompt-template.md`. Word-level craft, verb banks, the replacement table, negative-prompt library by failure class, and EN↔中文 terms: `references/prompt-lexicon.md`.
 
-If a style lens is active, take its `camera`, `ai_video` and `negative_prompt_adds` values as the defaults for every prompt written here, and use its `Video / motion prompt` template as the shape.
+When the requested deliverable is the Chinese asset-anchored storyboard, fill `assets/reference-storyboard-template-zh.md` rather than the compact S4 form. Its global asset rules carry the invariants; its per-segment fields carry action, camera and sound. Convert to a platform-native structure only when requested, following the applicable adapter without changing the reference roles or story constraints. A named director's prompt shape does not override the user's chosen format.
+
+If a style lens is active, take its `camera`, `ai_video` and `negative_prompt_adds` values as the defaults for every prompt written here. Use its `Video / motion prompt` template as the shape unless the user requested another format.
 
 ### 11. Sound and dialogue plan
 
@@ -338,9 +343,9 @@ If no prompt, keyframe, or clip was supplied, do not invent the user's shot to f
 | A | Director Analysis | Interpretation, subtext, direction rules | inline (below) |
 | B | Beat Sheet | Structure before shots | `assets/beat-sheet-template.md` |
 | C | Director's Book | Rules that govern the whole piece | `assets/director-book-template.md` |
-| D | Shot Plan | Shot list, storyboard plan, shooting table | `assets/shot-plan-template.md` |
+| D | Shot Plan | Shot list, storyboard plan, shooting table | `assets/shot-plan-template.md`; Chinese reference-image prose: `assets/reference-storyboard-template-zh.md` |
 | E | Keyframe Prompt Pack | Stills, first/last frames, panels, character sheets | `assets/keyframe-prompt-template.md` |
-| F | Video Motion Prompt Pack | Assets exist, motion prompts needed | `assets/video-prompt-template.md` |
+| F | Video Motion Prompt Pack | Assets exist, motion prompts needed | `assets/video-prompt-template.md`; requested Chinese asset-anchored format: `assets/reference-storyboard-template-zh.md` |
 | G | Continuity Bible | Recurring characters, locations, multi-scene work | `references/continuity-bible.md` |
 | H | Sound & Dialogue Plan | Sound design, music, dialogue, VO | `assets/sound-plan-template.md` |
 | I | Edit & Assembly Plan | Cutting generated clips into a sequence | `assets/edit-timeline-template.md` |

@@ -14,6 +14,8 @@ This maintained edition is bound to [yipingheijiang/DirectorSKILL](https://githu
 
 For requests to animate a supplied image while keeping its look, [reference-image fidelity](references/reference-image-fidelity.md) covers the opening composition, observed light/color/focus/texture, permitted motion, and verification. It includes Chinese and English patterns and a scoped H3 first-frame wrapper; it does not promise pixel-identical output.
 
+The [Chinese reference-anchored storyboard template](assets/reference-storyboard-template-zh.md) adds `<Picture N>` asset roles, optional first/last-frame anchors, and timed blocks for action, targeted exclusions, constraints, blocking, camera and sound. Modes D/F route Chinese reference-image storyboards to it while preserving explicitly requested tables and platform-native formats.
+
 ---
 
 ## Why this exists
@@ -260,6 +262,7 @@ cinematic-director/
 │   ├── beat-sheet-template.md            # Mode B
 │   ├── director-book-template.md         # Mode C
 │   ├── shot-plan-template.md             # Mode D
+│   ├── reference-storyboard-template-zh.md # Modes D/F: Chinese asset-anchored storyboard
 │   ├── keyframe-prompt-template.md       # Mode E
 │   ├── video-prompt-template.md          # Mode F
 │   ├── sound-plan-template.md            # Mode H
@@ -302,6 +305,10 @@ The MIT grant covers the skill files. The usage rule above is not a licence cond
 本维护版本绑定 [yipingheijiang/DirectorSKILL](https://github.com/yipingheijiang/DirectorSKILL)，基于 [wangzhang-wu 原项目](https://github.com/wuwangzhang1216/DirectorSKILL)，保留原作者署名和 MIT 许可证。
 
 新增[沿用原图构图与风格](references/reference-image-fidelity.md)：从参考图建立的构图开始，保留实际观察到的人物、光影、色彩、焦点层次与绘制质感，再安排明确的动作和运镜。包含中英文提示词模板及适用 H3 首帧流程的写法；明确区分“要求保持一致”和“已验证成片一致”。
+
+新增[中文资产锚定分镜模板](assets/reference-storyboard-template-zh.md)：按“资产图锚定、出场角色、背景场景、参考图使用规则、前一个分镜描述、当前分镜的分段描述、输出约束、视觉风格”编写。每段保留“时间段、画面、禁止、约束、站位与朝向、运镜、音效”，使用 `<Picture N>` 对应实际图片，并区分人物形象、场景结构与首尾帧构图。
+
+调用示例：`使用 cinematic-director，按中文资产锚定模板编写分镜；图一是角色，图二是场景，图三是首帧，保留提供的时间表和原台词。` 模板按实际剧情增删分段，不固定时长、角色或画风；明确要求表格或平台原生结构时仍按该要求输出。
 
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Skill](https://img.shields.io/badge/Claude_Skill-cinematic--director-blue)

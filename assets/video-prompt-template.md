@@ -8,6 +8,8 @@ banned words, the negative library and the cut order for an over-long prompt are
 [prompt lexicon](../references/prompt-lexicon.md). This file owns the fill-in forms and the
 per-prompt self-check.
 
+For the requested Chinese asset-anchored storyboard format, use [中文资产锚定分镜模板](reference-storyboard-template-zh.md). It is an authoring format; use this file and the applicable adapter if the user also requests conversion to a platform-native prompt.
+
 Every worked example inherits from [director book](director-book-template.md) and
 [shot plan](shot-plan-template.md), and animates the stills built in
 [keyframe prompt template](keyframe-prompt-template.md): project `Under the Door` (`UTD`), scene
